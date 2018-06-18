@@ -40,6 +40,15 @@ public class ImageEntry implements Serializable {
     
     private boolean directrory;
     
+    private String iconText;
+    
+    public void setIconText(String iconText) {
+        this.iconText = iconText;
+    }
+    public String getIconText() {
+        return iconText;
+    }
+
     
     /** Creates a new instance of ImageEntry */
     public ImageEntry() {

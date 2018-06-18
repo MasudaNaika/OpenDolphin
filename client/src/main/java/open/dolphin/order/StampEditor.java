@@ -11,6 +11,7 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
+import open.dolphin.client.ClientContext;
 import open.dolphin.helper.ComponentMemory;
 import open.dolphin.infomodel.IInfoModel;
 import open.dolphin.infomodel.ModuleModel;
@@ -63,6 +64,7 @@ public class StampEditor implements PropertyChangeListener {
                 editor.setValue(stamp);
 
                 dialog = new JDialog(new JFrame(), true);
+                ClientContext.setDolphinIcon(dialog);
                 dialog.setTitle(editor.getOrderName());
                 dialog.getContentPane().add(editor.getView(), BorderLayout.CENTER);
                 dialog.addWindowListener(new WindowAdapter() {

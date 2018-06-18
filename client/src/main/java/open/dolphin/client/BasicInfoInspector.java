@@ -85,6 +85,9 @@ public class BasicInfoInspector {
         nameLabel.setBackground(color);
         addressLabel.setBackground(color);
         basePanel.setBackground(color);
+        
+        // コンポーネント高固定のしるしをつける
+        basePanel.setName(GUIConst.FIXED_HEIGHT);
     }
 
     /**

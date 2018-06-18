@@ -95,7 +95,8 @@ public class CalendarTableModel extends AbstractTableModel {
     
     @Override
     public int getRowCount() {
-        return numRows;
+//        return numRows;
+        return 6;
     }
     
     @Override

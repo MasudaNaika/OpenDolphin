@@ -158,6 +158,7 @@ public abstract class AbstractLoginDialog implements ILoginDialog {
                 doWindowOpened();
             }
         });
+        ClientContext.setDolphinIcon(dialog);
         
         //-------------------------------------
         // 中央へ表示する。（EDT からコールされている）

@@ -2,7 +2,10 @@ package open.dolphin.stampbox;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Graphics;
+import java.awt.Insets;
 import java.awt.Point;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.XMLEncoder;
@@ -17,6 +20,7 @@ import javax.swing.event.TreeModelEvent;
 import javax.swing.event.TreeModelListener;
 import javax.swing.tree.*;
 import open.dolphin.client.ClientContext;
+import open.dolphin.client.GUIConst;
 import open.dolphin.delegater.StampDelegater;
 import open.dolphin.helper.SimpleWorker;
 import open.dolphin.infomodel.*;
@@ -33,6 +37,8 @@ public class StampTree extends JTree implements TreeModelListener {
     public static final String SELECTED_NODE_PROP = "selectedNodeProp";
     
     private static final int TOOLTIP_LENGTH = 35;
+    
+    private static final int ROW_HEIGHT_MARGIN = 4;
     
     // ASP Tree かどうかのフラグ 
     private boolean asp;
@@ -75,6 +81,10 @@ public class StampTree extends JTree implements TreeModelListener {
         
         // Enable ToolTips
         enableToolTips(true);
+        
+        // update RowHeight
+        int h = getFontMetrics(getFont()).getHeight() + ROW_HEIGHT_MARGIN;
+        setRowHeight(h);
     }
     
     /**
@@ -1393,5 +1403,40 @@ public class StampTree extends JTree implements TreeModelListener {
             
             return c;
         } 
+    }
+    
+    // Paint zebra background stripes
+    private static final Color[] ROW_COLORS = {GUIConst.TABLE_EVEN_COLOR, GUIConst.TABLE_ODD_COLOR};
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+
+        Insets insets = getInsets();
+        int x = insets.left;
+        int y = insets.top;
+        int width = getWidth() - insets.left - insets.right;
+        int height = getHeight() - insets.top - insets.bottom;
+        int numRows = getRowCount();
+        Rectangle visibleRect = getVisibleRect();
+        Rectangle rowRect = new Rectangle();
+
+        for (int row = 0; row < numRows || y < height; ++row) {
+            int rowH = row < numRows
+                    ? getRowBounds(row).height
+                    : getRowHeight();
+            rowH = Math.min(rowH, height - y);
+            rowRect.setBounds(x, y, width, rowH);
+            if (isPaintingForPrint() || rowRect.intersects(visibleRect)) {
+                g.setColor(ROW_COLORS[row & 1]);
+                g.fillRect(x, y, width, rowH);
+            }
+            y += rowH;
+        }
+
+        // Paint component
+        setOpaque(false);
+        super.paintComponent(g);
+        setOpaque(true);
+        
     }
 }

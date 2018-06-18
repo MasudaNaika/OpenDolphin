@@ -145,8 +145,11 @@ public class Dolphin implements MainWindow {
     }
 
     public void start(String mode) {
+ 
+//masuda^
+        // アンチエイリアスの設定は最初がいい？
+        System.setProperty("awt.useSystemAAFontSettings", "on");
         
-//masuda^         
          // 排他処理用のUUIDを決める
         clientUUID = UUID.randomUUID().toString();
 //masuda$
@@ -551,6 +554,10 @@ public class Dolphin implements MainWindow {
             fApplication.setQuitHandler((com.apple.eawt.AppEvent.QuitEvent qe, com.apple.eawt.QuitResponse qr) -> {
                 processExit();
             });
+            
+            // Dock Icon
+            ImageIcon icon = ClientContext.getImageIcon("OpenDolphin_icon.png");
+            fApplication.setDockIconImage(icon.getImage());
         }
         windowSupport.getFrame().setVisible(true);
     }
@@ -1932,6 +1939,7 @@ public class Dolphin implements MainWindow {
      * @param args project name
      */
     public static void main(String[] args) {
-        Dolphin.getInstance().start(args.length==1 ? args[0] : "i18n");
+//        Dolphin.getInstance().start(args.length==1 ? args[0] : "i18n");
+        Dolphin.getInstance().start("dolphin");
     }
 }

@@ -15,5 +15,6 @@ Any value defined here will override the pom.xml file value but is only applicab
 -->
         <org-netbeans-modules-maven-jaxws.rest_2e_config_2e_type>user</org-netbeans-modules-maven-jaxws.rest_2e_config_2e_type>
         <org-netbeans-modules-maven-jaxws._5f_C_5f_SsoLogin_2e_xml>file:/Users/kazushi/SsoLogin.xml</org-netbeans-modules-maven-jaxws._5f_C_5f_SsoLogin_2e_xml>
+        <org-netbeans-modules-whitelist.whitelist-oracle>false</org-netbeans-modules-whitelist.whitelist-oracle>
     </properties>
 </project-shared-configuration>

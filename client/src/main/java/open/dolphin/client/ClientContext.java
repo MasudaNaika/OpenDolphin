@@ -2,6 +2,7 @@ package open.dolphin.client;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Window;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
@@ -210,5 +211,10 @@ public class ClientContext {
     
     public static ImageIcon getImageIconArias(String name) {
         return stub.getImageIconArias(name);
-    }   
+    }
+    
+    public static void setDolphinIcon(Window window) {
+        ImageIcon icon = stub.getImageIcon("OpenDolphin_icon.png");
+        window.setIconImage(icon.getImage());
+    }
 }

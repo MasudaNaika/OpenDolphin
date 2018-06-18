@@ -102,7 +102,8 @@ public class CheckInteractionPanel {
             sb.append(bundle.getString("totalKindsOfMedication")).append(cnt);
             lbl_Past_count.setText(sb.toString());
         }
-        dialog = new JDialog((Frame)context.getFrame(), true);      
+        dialog = new JDialog((Frame)context.getFrame(), true);     
+        ClientContext.setDolphinIcon(dialog);
         dialog.setContentPane(view);
 
         blockGlass = new BlockGlass();

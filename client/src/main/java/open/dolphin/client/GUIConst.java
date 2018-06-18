@@ -146,4 +146,6 @@ public class GUIConst {
     public static final String PVT_RELAY_IS_RUNNING = "runtime.pvt.relay";      // 受付リレー
     public static final String SEND_MML_IS_RUNNING = "runtime.sendMml";         // MML出力
     
+    public static final String FIXED_HEIGHT = "fixedHeight";
+    
 }

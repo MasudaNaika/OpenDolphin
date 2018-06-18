@@ -514,7 +514,6 @@ public class ChartImpl extends AbstractMainTool implements Chart, IInfoModel {
         appMenu.build(myMenuBar);
         mediator.registerActions(appMenu.getActionMap());
         myToolPanel = appMenu.getToolPanelProduct();
-        myToolPanel.add(inspector.getBasicInfoInspector().getPanel(), 0);
         
         // adminとそれ以外
         Action addUserAction = mediator.getAction(GUIConst.ACTION_ADD_USER);
@@ -726,19 +725,19 @@ public class ChartImpl extends AbstractMainTool implements Chart, IInfoModel {
         tabbedPane = loadDocuments();
 
         // 全体をレイアウトする
-        inspector.getPanel().setPreferredSize(new Dimension(280, 620));
-        JPanel tmp = new JPanel(new BorderLayout());
-        tmp.add(myToolPanel, BorderLayout.NORTH);
-        tmp.add(inspector.getPanel(), BorderLayout.WEST);
-        tmp.add(tabbedPane, BorderLayout.CENTER);
-
-        JPanel myPanel = new JPanel();
-        myPanel.setOpaque(true);
-        myPanel.setLayout(new BorderLayout(5, 7));
-
-        myPanel.add(tmp, BorderLayout.CENTER);
-        myPanel.add((JPanel) statusPanel, BorderLayout.SOUTH);
-        frame.setContentPane(myPanel);
+        // 4th inspectorの下部余白を有効利用、サイズ可変化
+        // 全体をレイアウトする
+        ChartSplitPanel splitPanel = new ChartSplitPanel();
+        splitPanel.setInspectorPanel(inspector.getPanel());
+        JPanel rightPanel = new JPanel();
+        rightPanel.setLayout(new BorderLayout());
+        rightPanel.add(myToolPanel, BorderLayout.NORTH);
+        rightPanel.add(tabbedPane, BorderLayout.CENTER);
+        rightPanel.add((JPanel) statusPanel, BorderLayout.SOUTH);
+        splitPanel.setChartPanel(rightPanel);
+        splitPanel.initComponents();
+        
+        frame.setContentPane(splitPanel);
 
         // Injection     
         textBtn.setIcon(ClientContext.getImageIconArias("icon_text_stap_menu"));

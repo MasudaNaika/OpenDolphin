@@ -40,6 +40,9 @@ public class WindowSupport implements MenuListener {
         // フレームを生成する
         final JFrame frame = new JFrame(title);
         
+        // dolphinアイコンをセット
+        ClientContext.setDolphinIcon(frame);
+        
         // メニューバーを生成する
         JMenuBar menuBar = new JMenuBar();
         

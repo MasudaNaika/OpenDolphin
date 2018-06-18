@@ -2,6 +2,7 @@ package open.dolphin.client;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
@@ -16,8 +17,10 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import javax.swing.*;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import open.dolphin.infomodel.SimpleDate;
+import open.dolphin.util.Holiday;
 
 /**
  * LiteCalendarPanel
@@ -95,6 +98,9 @@ public final class LiteCalendarPanel extends JPanel implements PropertyChangeLis
         table = new JTable(tableModel);
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 //masuda^
+        // 土日色分けのヘッダレンダラ thx Dr. pns
+        JTableHeader header = table.getTableHeader();
+        header.setDefaultRenderer(new CalendarHeaderRenderer());
         // カラムのドラッグ・リサイズを不許可
         table.getTableHeader().setResizingAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
@@ -570,12 +576,16 @@ public final class LiteCalendarPanel extends JPanel implements PropertyChangeLis
                     }
                 }
                 
+                // 休日色分け
+                SimpleDate sd = tableModel.getDate(row, col);
+                GregorianCalendar gc = new GregorianCalendar(sd.getYear(), sd.getMonth(), sd.getDay());
+                
                 ((JLabel) compo).setText(day);
                 if (!isAccept(row, col)) {
                     this.setForeground(Color.LIGHT_GRAY);
-                }         
-                // 曜日によって ForeColor を変える
-                else if (col == 0) {
+                    
+                // 休日は赤
+                } else if (Holiday.isHoliday(gc)) {
                     this.setForeground(getSundayFore());
                     
                 } else if (col == 6) {
@@ -626,4 +636,33 @@ public final class LiteCalendarPanel extends JPanel implements PropertyChangeLis
         
         return ok;
     }   
+    
+    // pns先生のコード、曜日のレンダラ
+    private static final class CalendarHeaderRenderer extends DefaultTableCellRenderer {
+
+        public CalendarHeaderRenderer() {
+            setHorizontalAlignment(SwingConstants.CENTER);
+            setOpaque(false);
+        }
+
+        @Override
+        public Component getTableCellRendererComponent(JTable t, Object v, 
+                boolean isSelected, boolean hasFocus, int row, int col) {
+            
+            switch (col) {
+                case 0:
+                    setForeground(Color.red);
+                    break;
+                case 6:
+                    setForeground(Color.blue);
+                    break;
+                default:
+                    setForeground(Color.black);
+            }
+
+            super.getTableCellRendererComponent(t, v, isSelected, hasFocus, row, col);
+
+            return this;
+        }
+    }
 }

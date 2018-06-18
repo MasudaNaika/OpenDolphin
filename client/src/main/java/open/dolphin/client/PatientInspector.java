@@ -193,6 +193,7 @@ public class PatientInspector {
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         
         // 左側のレイアウトを行う
+        container.add(basicInfoInspector.getPanel());   // basicInfoも左側に入れる。必ずトップ
         layoutRow(container, topInspector, settingNames);
         layoutRow(container, secondInspector, settingNames);
         layoutRow(container, thirdInspector, settingNames);

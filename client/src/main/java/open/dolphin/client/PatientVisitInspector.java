@@ -42,6 +42,9 @@ public class PatientVisitInspector {
         pvtEvent = "PVT"; // PVT
         calendarCardPanel = new CalendarCardPanel(ClientContext.getEventColorTable());
         calendarCardPanel.setCalendarRange(new int[]{-12, 0});
+        
+        // コンポーネント高固定のしるしをつける
+        calendarCardPanel.setName(GUIConst.FIXED_HEIGHT);
     }
 
     private void update() {

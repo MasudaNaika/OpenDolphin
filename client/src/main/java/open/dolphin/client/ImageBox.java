@@ -23,8 +23,10 @@ import open.dolphin.helper.ComponentMemory;
 public class ImageBox extends AbstractMainTool {
 
     private static final int DEFAULT_COLUMN_COUNT 	=   3;
-    private static final int DEFAULT_IMAGE_WIDTH 	= 120;
-    private static final int DEFAULT_IMAGE_HEIGHT 	= 120;
+//    private static final int DEFAULT_IMAGE_WIDTH 	= 120;
+//    private static final int DEFAULT_IMAGE_HEIGHT 	= 120;
+    private static final int DEFAULT_IMAGE_WIDTH 	= 80;
+    private static final int DEFAULT_IMAGE_HEIGHT 	= 80;
     private static final String[] DEFAULT_IMAGE_SUFFIX = {".jpg"};
     
     private String imageLocation;
@@ -170,6 +172,7 @@ public class ImageBox extends AbstractMainTool {
         
         String title = bundle.getString("title.window");
         frame = new JDialog((JFrame) null, title, false);
+        ClientContext.setDolphinIcon(frame);
         ComponentMemory cm = new ComponentMemory(frame,
                 new Point(defaultLocX,defaultLocY),
                 new Dimension(defaultWidth, defaultHeight),
