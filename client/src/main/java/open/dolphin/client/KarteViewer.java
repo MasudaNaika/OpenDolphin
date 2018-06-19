@@ -119,12 +119,6 @@ public class KarteViewer extends AbstractChartDocument implements Comparable {
         return 0;
     }
     
-    public void adjustSize() {
-        int h = getActualHeight();
-        int soaWidth = soaPane.getTextPane().getPreferredSize().width; 
-        soaPane.getTextPane().setPreferredSize(new Dimension(soaWidth, h));
-    }
-    
     public String getDocType() {
         if (model != null) {
             String docType = model.getDocInfoModel().getDocType();
@@ -258,6 +252,7 @@ public class KarteViewer extends AbstractChartDocument implements Comparable {
     private void initialize() {
         
         KartePanel1 kp1 = new KartePanel1();
+        kp1.initComponents(false);
         panel2 = kp1;
         
         // TimeStampLabel を生成する

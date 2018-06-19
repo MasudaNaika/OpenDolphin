@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import open.dolphin.helper.WindowSupport;
@@ -29,6 +30,8 @@ public class EditorFrame extends AbstractMainTool implements Chart {
     // このクラスの２つのモード（状態）でメニューの制御に使用する
     public enum EditorMode {BROWSER, EDITOR};
     
+    private static final Border BORDER = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
+    
     // 全インスタンスを保持するリスト
     private static final List<Chart> allEditorFrames = new CopyOnWriteArrayList<>();
     
@@ -44,8 +47,8 @@ public class EditorFrame extends AbstractMainTool implements Chart {
     // ToolBar パネル
     private JPanel myToolPanel;
     
-    // スクローラコンポーネント
-    private JScrollPane scroller;
+    // KartePanel
+    private JPanel kartePanel;
     
     // Status パネル
     private IStatusPanel statusPanel;
@@ -523,8 +526,8 @@ public class EditorFrame extends AbstractMainTool implements Chart {
             mode = EditorMode.BROWSER;
             view.setContext(EditorFrame.this); // context
             view.start();
-            scroller = new JScrollPane(view.getUI());
-            scroller.getVerticalScrollBar().setUnitIncrement(16);
+
+            kartePanel = view.getUI();
             mediator.enabledAction(GUIConst.ACTION_NEW_DOCUMENT, false);
 
         } else if (editor != null) {
@@ -532,12 +535,15 @@ public class EditorFrame extends AbstractMainTool implements Chart {
             editor.setContext(EditorFrame.this); // context
             editor.initialize();
             editor.start();
-            scroller = editor.getScroller();
+
+            kartePanel = editor.getUI();
             mediator.enabledAction(GUIConst.ACTION_NEW_KARTE, false);
             mediator.enabledAction(GUIConst.ACTION_NEW_DOCUMENT, false);
         }
 
-        content.add(scroller, BorderLayout.CENTER);
+        kartePanel.setBorder(BORDER);
+        content.add(kartePanel, BorderLayout.CENTER);
+        
         frame.getContentPane().setLayout(new BorderLayout(0, 7));
         frame.getContentPane().add(content, BorderLayout.CENTER);
         frame.getContentPane().add((JPanel) statusPanel, BorderLayout.SOUTH);
@@ -660,11 +666,16 @@ public class EditorFrame extends AbstractMainTool implements Chart {
             mediator.enabledAction(GUIConst.ACTION_NEW_KARTE, false);
             mediator.enabledAction(GUIConst.ACTION_NEW_DOCUMENT, false);
             mode = EditorMode.EDITOR;
-            content.remove(scroller);
+//            content.remove(scroller);
             //scroller = new JScrollPane(editor.getUI());
             //scroller.getVerticalScrollBar().setUnitIncrement(16);
-            scroller = editor.getScroller();
-            content.add(scroller, BorderLayout.CENTER);
+//            scroller = editor.getScroller();
+//            content.add(scroller, BorderLayout.CENTER);
+            // KartePanelを使用
+            content.remove(kartePanel);
+            kartePanel = editor.getUI();
+            kartePanel.setBorder(BORDER);
+            content.add(kartePanel, BorderLayout.CENTER);
             getFrame().validate();
         }
     }

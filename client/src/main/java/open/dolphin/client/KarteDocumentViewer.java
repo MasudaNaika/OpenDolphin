@@ -2,7 +2,6 @@ package open.dolphin.client;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Rectangle;
 import java.awt.event.*;
@@ -73,7 +72,7 @@ public class KarteDocumentViewer extends AbstractChartDocument implements Docume
 
     // 選択を解除されたカルテのリスト
     private ArrayList<KarteViewer> removed;
-    private JPanel scrollerPanel;
+    private ScrollableJPanel scrollerPanel;
 
     /**
      * DocumentViewerオブジェクトを生成する。
@@ -283,12 +282,14 @@ public class KarteDocumentViewer extends AbstractChartDocument implements Docume
                 scrollerPanel.removeAll();
             }
 
-            scrollerPanel = new JPanel();
+            scrollerPanel = new ScrollableJPanel();
 
             if (vsc) {
                 scrollerPanel.setLayout(new BoxLayout(scrollerPanel, BoxLayout.Y_AXIS));
+                scrollerPanel.setFixedWidth(true);
             } else {
                 scrollerPanel.setLayout(new BoxLayout(scrollerPanel, BoxLayout.X_AXIS));
+                scrollerPanel.setFixedWidth(false);
             }
 
             karteList.stream().forEach((view) -> {
@@ -377,10 +378,10 @@ public class KarteDocumentViewer extends AbstractChartDocument implements Docume
                     };
                     karteViewer.addMouseListener(ml);
 //s.oh^ 2013/01/29 過去カルテの修正操作(選択状態)
-                    if(karteViewer.getUI() instanceof KartePanel2M) {
+                    if(karteViewer.getUI() instanceof KartePanel2) {
                         // アイコンの差し換え(デザイン変更)
-                        ((KartePanel2M)karteViewer.getUI()).getTimeStampPanel().addMouseListener(ml);
-                        ((KartePanel2M)karteViewer.getUI()).getTimeStampLabel().addMouseListener(ml);
+                        ((KartePanel2)karteViewer.getUI()).getTimeStampPanel().addMouseListener(ml);
+                        ((KartePanel2)karteViewer.getUI()).getTimeStampLabel().addMouseListener(ml);
                     }
 //s.oh$
                 }
@@ -435,12 +436,14 @@ public class KarteDocumentViewer extends AbstractChartDocument implements Docume
             scrollerPanel.removeAll();
         }
 
-        scrollerPanel = new JPanel();
+        scrollerPanel = new ScrollableJPanel();
         
         if (vsc) {
             scrollerPanel.setLayout(new BoxLayout(scrollerPanel, BoxLayout.Y_AXIS));
+            scrollerPanel.setFixedWidth(true);
         } else {
             scrollerPanel.setLayout(new BoxLayout(scrollerPanel, BoxLayout.X_AXIS));
+            scrollerPanel.setFixedWidth(false);
         }
 
         int index = 0;
@@ -483,27 +486,27 @@ public class KarteDocumentViewer extends AbstractChartDocument implements Docume
     private void showKarteListV() {
 
         Runnable awt = () -> {
-            if (karteList.size() > 1) {
-                int totalHeight = 0;
-                for (KarteViewer view : karteList) {
-                    int w = view.panel2.getPreferredSize().width;
-//minagawa^ Kuroiwa specific                        
-//s.oh^ 2013/03/28 入力行が一行の場合に文字が全部表示されない。
-                    //int h = view.getActualHeight() + 30;
-//s.oh^ 2014/06/02 複数カルテ表示時に全部表示されない
-                    //int h = view.getActualHeight() + KARTE_OFFSET_HEIGHT;
-                    int offset = (view.getModel().getModules() != null) ? view.getModel().getModules().size() * 20 : 0;
-                    int h = view.getActualHeight() + KARTE_OFFSET_HEIGHT + offset;
-//s.oh$
-//s.oh$
-                    //int h = view.getActualHeight() + KARTE_OFFSET_HEIGHT; -<kuroiwa specific
-//minagawa$
-                    totalHeight += h;
-                    view.panel2.setPreferredSize(new Dimension(w, h));
-                }
-                int spWidth = scrollerPanel.getPreferredSize().width;
-                scrollerPanel.setPreferredSize(new Dimension(spWidth, totalHeight));
-            }
+//            if (karteList.size() > 1) {
+//                int totalHeight = 0;
+//                for (KarteViewer view : karteList) {
+//                    int w = view.panel2.getPreferredSize().width;
+////minagawa^ Kuroiwa specific                        
+////s.oh^ 2013/03/28 入力行が一行の場合に文字が全部表示されない。
+//                    //int h = view.getActualHeight() + 30;
+////s.oh^ 2014/06/02 複数カルテ表示時に全部表示されない
+//                    //int h = view.getActualHeight() + KARTE_OFFSET_HEIGHT;
+//                    int offset = (view.getModel().getModules() != null) ? view.getModel().getModules().size() * 20 : 0;
+//                    int h = view.getActualHeight() + KARTE_OFFSET_HEIGHT + offset;
+////s.oh$
+////s.oh$
+//                    //int h = view.getActualHeight() + KARTE_OFFSET_HEIGHT; -<kuroiwa specific
+////minagawa$
+//                    totalHeight += h;
+//                    view.panel2.setPreferredSize(new Dimension(w, h));
+//                }
+//                int spWidth = scrollerPanel.getPreferredSize().width;
+//                scrollerPanel.setPreferredSize(new Dimension(spWidth, totalHeight));
+//            }
             
             scrollerPanel.scrollRectToVisible(new Rectangle(0, 0, scrollerPanel.getWidth(), 100));
             //scrollerPanel.setVisible(true);
@@ -521,17 +524,17 @@ public class KarteDocumentViewer extends AbstractChartDocument implements Docume
     private void showKarteListH() {
 
         Runnable awt = () -> {
-            if (karteList.size() > 1) {
-                int maxHeight = 0;
-                for (KarteViewer view : karteList) {
-                    int w = view.panel2.getPreferredSize().width;
-                    int h = view.getActualHeight() + 20;
-                    maxHeight = maxHeight >= h ? maxHeight : h;
-                    view.panel2.setPreferredSize(new Dimension(w, h));
-                }
-                int spWidth = scrollerPanel.getPreferredSize().width;
-                scrollerPanel.setPreferredSize(new Dimension(spWidth, maxHeight));
-            }
+//            if (karteList.size() > 1) {
+//                int maxHeight = 0;
+//                for (KarteViewer view : karteList) {
+//                    int w = view.panel2.getPreferredSize().width;
+//                    int h = view.getActualHeight() + 20;
+//                    maxHeight = maxHeight >= h ? maxHeight : h;
+//                    view.panel2.setPreferredSize(new Dimension(w, h));
+//                }
+//                int spWidth = scrollerPanel.getPreferredSize().width;
+//                scrollerPanel.setPreferredSize(new Dimension(spWidth, maxHeight));
+//            }
             
             scrollerPanel.scrollRectToVisible(new Rectangle(0, 0, scrollerPanel.getWidth(), 100));
             getContext().showDocument(0);

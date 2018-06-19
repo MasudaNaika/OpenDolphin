@@ -46,15 +46,6 @@ public class KarteViewer2 extends KarteViewer {
         return 0;
     }
     
-    @Override
-    public void adjustSize() {
-        int h = getActualHeight();
-        int soaWidth = soaPane.getTextPane().getPreferredSize().width;
-        int pWidth = pPane.getTextPane().getPreferredSize().width;
-        soaPane.getTextPane().setPreferredSize(new Dimension(soaWidth, h));
-        pPane.getTextPane().setPreferredSize(new Dimension(pWidth, h));
-    }
-    
     /**
      * P Pane を返す。
      * @return pPane
@@ -68,7 +59,8 @@ public class KarteViewer2 extends KarteViewer {
      */
     private void initialize() {
         
-        KartePanel2M kp2 = new KartePanel2M();
+        KartePanel2 kp2 = new KartePanel2();
+        kp2.initComponents(false);
         panel2 = kp2;
         
         // TimeStampLabel を生成する
@@ -136,7 +128,7 @@ public class KarteViewer2 extends KarteViewer {
                 MessageFormat msf = new MessageFormat(underTemp);
                 timeStamp = msf.format(new Object[]{timeStamp});
                 // 背景が DarkBlue、foreを白にする
-                KartePanel2M kp2 = (KartePanel2M)panel2;
+                KartePanel2 kp2 = (KartePanel2)panel2;
                 kp2.getTimeStampPanel().setOpaque(true);
                 kp2.getTimeStampPanel().setBackground(bkColor);
                 timeStampLabel.setOpaque(true);
@@ -145,7 +137,7 @@ public class KarteViewer2 extends KarteViewer {
             }
 //s.oh^ 2014/10/07 自費カルテタイトル帯色変更
             else if(model.getDocInfoModel().getHealthInsurance().startsWith(selfPrefix)) {
-                KartePanel2M kp2 = (KartePanel2M)panel2;
+                KartePanel2 kp2 = (KartePanel2)panel2;
                 kp2.getTimeStampPanel().setOpaque(true);
                 kp2.getTimeStampPanel().setBackground(Color.YELLOW);
                 timeStampLabel.setOpaque(true);

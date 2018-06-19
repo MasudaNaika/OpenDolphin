@@ -403,6 +403,7 @@ public class KarteEditor extends AbstractChartDocument implements IInfoModel, NC
         stateMgr = new StateMgr();
 
         KartePanel1 kp1 = new KartePanel1();
+        kp1.initComponents(true);
         panel2 = kp1;
 
         // TimeStampLabel を生成する
@@ -423,10 +424,7 @@ public class KarteEditor extends AbstractChartDocument implements IInfoModel, NC
             soaPane.setDocId(docId);
         }
 
-        scroller = new JScrollPane(kp1);
-        scroller.getVerticalScrollBar().setUnitIncrement(16);
-        getUI().setLayout(new BorderLayout());
-        getUI().add(scroller, BorderLayout.CENTER);
+        setUI(kp1);
 
         // 初期化の前にモデルがセットしてある。
         // Model を表示する
@@ -440,8 +438,8 @@ public class KarteEditor extends AbstractChartDocument implements IInfoModel, NC
 
         stateMgr = new StateMgr();
 
-        //KartePanel2 kp2 = new KartePanel2();
-        KartePanel2M kp2 = new KartePanel2M();
+        KartePanel2 kp2 = new KartePanel2();
+        kp2.initComponents(true);
         panel2 = kp2;
 
         // TimeStampLabel を生成する
@@ -481,10 +479,7 @@ public class KarteEditor extends AbstractChartDocument implements IInfoModel, NC
         }
 //s.oh$
 
-        scroller = new JScrollPane(kp2);
-        scroller.getVerticalScrollBar().setUnitIncrement(16);
-        getUI().setLayout(new BorderLayout());
-        getUI().add(scroller, BorderLayout.CENTER);
+        setUI(kp2);
 
         // 初期化の前にモデルがセットしてある。
         // Model を表示する
@@ -498,9 +493,6 @@ public class KarteEditor extends AbstractChartDocument implements IInfoModel, NC
         } else if (getMode() == DOUBLE_MODE) {
             start2();
         }
-//s.oh^ 2013/11/26 スクロールバーのリセット
-        resetScrollBar();
-//s.oh$
     }
 
     @Override
@@ -2203,18 +2195,6 @@ public class KarteEditor extends AbstractChartDocument implements IInfoModel, NC
     public static List<KarteEditor> getAllKarte() {
         return allKarte;
     }
-    
-//s.oh^ 2013/11/26 スクロールバーのリセット
-    public void resetScrollBar() {
-        SwingUtilities.invokeLater(() -> {
-            if(scroller != null) {
-                scroller.getVerticalScrollBar().setValue(0);
-            }
-            if(soaPane != null) soaPane.getTextPane().setCaretPosition(0);            
-            if(pPane != null) pPane.getTextPane().setCaretPosition(0);
-        });
-    }
-//s.oh$
     
     /**
      * このエディタの抽象状態クラス
