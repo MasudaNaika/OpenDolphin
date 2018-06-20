@@ -2,7 +2,6 @@ package open.dolphin.letter;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
-import java.awt.FlowLayout;
 import java.awt.Window;
 import java.awt.print.PageFormat;
 import java.io.IOException;
@@ -11,7 +10,6 @@ import java.nio.file.Paths;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -23,7 +21,6 @@ import open.dolphin.helper.DBTask;
 import open.dolphin.infomodel.*;
 import open.dolphin.project.Project;
 import open.dolphin.util.AgeCalculater;
-import org.apache.log4j.Level;
 
 /**
  * @author Kazushi Minagawa, Digital Globe, Inc.
@@ -286,9 +283,7 @@ public class Reply2Impl extends AbstractChartDocument implements Letter {
 
         // view を生成
         this.view = new Reply2View();        
-        JPanel p = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        p.add(this.view);
-        JScrollPane scroller = new JScrollPane(p);
+        JScrollPane scroller = new JScrollPane(view);
         getUI().setLayout(new BorderLayout());
         getUI().add(scroller, BorderLayout.CENTER);      
 
