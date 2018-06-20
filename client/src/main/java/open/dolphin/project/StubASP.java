@@ -73,4 +73,9 @@ public class StubASP extends ProjectStub {
     public boolean canGlobalPublish() {
         return true;
     }
+
+    @Override
+    public String getContextRoot() {
+        return CONTEXT_ROOT;
+    }
 }

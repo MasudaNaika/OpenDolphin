@@ -47,12 +47,12 @@ public class ImageBox extends AbstractMainTool {
     
     @Override
     public void start() {
-        initComponent();
-        connect();
-        if (! frame.isVisible()) {
-            frame.setVisible(true);
+        if (frame == null) {
+            initComponent();
+            connect();
+            setImageLocation(ClientContext.getSchemaDirectory());
         }
-        setImageLocation(ClientContext.getSchemaDirectory());
+        frame.setVisible(true);
     }
     
     @Override
@@ -68,20 +68,6 @@ public class ImageBox extends AbstractMainTool {
         }
         frame.setVisible(false);
         frame.dispose();
-    }
-    
-    public JFrame getFrame() {
-        //return frame;
-        return null;
-    }
-    
-    public void toFront() {
-        if (frame != null) {
-            if (!frame.isVisible()) {
-                frame.setVisible(true);
-            }
-            frame.toFront();
-        }
     }
     
     public String getImageLocation() {
@@ -157,11 +143,13 @@ public class ImageBox extends AbstractMainTool {
         java.util.ResourceBundle bundle = ClientContext.getMyBundle(ImageBox.class);
         
         // 更新ボタンを生成する
-        refreshBtn = new JButton(ClientContext.getImageIconArias("icon_refresh"));        
+        refreshBtn = new JButton(ClientContext.getImageIconArias("icon_refresh_small"));        
         refreshBtn.addActionListener((ActionListener) EventHandler.create(ActionListener.class, this, "refresh"));
         String toolTipText = bundle.getString("toolTipText.refresh");
         refreshBtn.setToolTipText(toolTipText);
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        JPanel btnPanel = new JPanel();
+        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
+        btnPanel.add(Box.createHorizontalGlue());
         btnPanel.add(refreshBtn);
         
         // 全体を配置する

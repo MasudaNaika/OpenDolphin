@@ -195,6 +195,10 @@ public abstract class ProjectStub implements java.io.Serializable {
         setString(Project.USER_ID, val);
     }
     
+    public void setContextRoot(String contextRoot) {
+        setString(Project.CONTEXT_ROOT, contextRoot);
+    }
+    
     //-----------------------------------------------------------
     // 
     //-----------------------------------------------------------
@@ -215,6 +219,8 @@ public abstract class ProjectStub implements java.io.Serializable {
     public abstract String getServer();
     
     public abstract String getPort();
+    
+    public abstract String getContextRoot();
     
     public abstract boolean isTester();
     

@@ -15,6 +15,13 @@ import open.dolphin.infomodel.UserModel;
  */
 public class Project  {
     
+    // context root
+    public static final String CONTEXT_ROOT             = "contextRoot";
+    // ASP & Pro
+    public static final String CONTEXT_ROOT_PRO = "/openDolphin/resources";
+    // Docker
+    public static final String CONTEXT_ROOT_DOCKER = "/dolphin/openSource";
+    
     // Prpject Name
     public static final String PROJECT_NAME		= "name";
     

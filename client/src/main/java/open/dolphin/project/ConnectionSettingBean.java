@@ -25,17 +25,21 @@ public final class ConnectionSettingBean extends AbstractSettingBean {
     // Port number
     private String port;
     
+    // Context root
+    private String contextRoot;
+    
     private final Map<String, String[]> tagMap = new HashMap<>(5, 0.75f);
     
     
     public ConnectionSettingBean() {
         tagMap.put("schema", new String[]{"http", "https"});
         tagMap.put("port", new String[]{"8080", "80", "443"});
+        tagMap.put(Project.CONTEXT_ROOT, new String[]{Project.CONTEXT_ROOT_PRO, Project.CONTEXT_ROOT_DOCKER});
     }
     
     @Override
     public String[] propertyOrder() {
-       return new String[]{"facilityId", "userId", "schema", "server", "port"};
+       return new String[]{"facilityId", "userId", "schema", "server", "port", "contextRoot"};
     }
     
     @Override
@@ -56,6 +60,7 @@ public final class ConnectionSettingBean extends AbstractSettingBean {
         valid = valid && (schema!=null && !"".equals(schema));
         valid = valid && (server!=null && !"".equals(server));
         valid = valid && (port!=null && !"".equals(port));
+        valid = valid && (contextRoot!=null && !"".equals(contextRoot));
         return valid;
     }
     
@@ -71,10 +76,13 @@ public final class ConnectionSettingBean extends AbstractSettingBean {
         java.util.logging.Logger.getLogger(this.getClass().getName()).log(Level.FINE, "schema={0}", stub.getSchema());
         java.util.logging.Logger.getLogger(this.getClass().getName()).log(Level.FINE, "sever={0}", stub.getServer());
         java.util.logging.Logger.getLogger(this.getClass().getName()).log(Level.FINE, "port={0}", stub.getPort());
+        java.util.logging.Logger.getLogger(this.getClass().getName()).log(Level.FINE, "serverType={0}", stub.getContextRoot());
             
         setSchema(stub.getSchema());
         setServer(stub.getServer());
         setPort(stub.getPort());
+        
+        setContextRoot(stub.getContextRoot());
     }
     
     @Override
@@ -95,6 +103,8 @@ public final class ConnectionSettingBean extends AbstractSettingBean {
         String uri = sb.toString();
         java.util.logging.Logger.getLogger(this.getClass().getName()).log(Level.FINE, "serverURI={0}", uri);
         stub.setServerURI(uri);
+        
+        stub.setContextRoot(getContextRoot());
     }
     
     public String getFacilityId() {
@@ -136,4 +146,13 @@ public final class ConnectionSettingBean extends AbstractSettingBean {
     public void setPort(String port) {
         this.port = port;
     }
+
+    public String getContextRoot() {
+        return contextRoot;
+    }
+
+    public void setContextRoot(String contextRoot) {
+        this.contextRoot = contextRoot;
+    }
+
 }

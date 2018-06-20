@@ -67,7 +67,11 @@ import open.dolphin.stampbox.StampBoxPlugin;
  * @author Kazushi Minagawa, Digital Globe, Inc.
  */
 public class Dolphin implements MainWindow {
+    
+    private static final String KEY_STAMP_BOX = "stampBox";
 
+    private static final String KEY_IMAGE_BOX = "imageBox";
+    
     // Window と Menu サポート
     private WindowSupport windowSupport;
 
@@ -85,9 +89,6 @@ public class Dolphin implements MainWindow {
 
     // BlockGlass
     private BlockGlass blockGlass;
-
-    // StampBox
-    private StampBoxPlugin stampBox;
 
     // 受付受信サーバ
     private PVTServer pvtServer;
@@ -519,10 +520,11 @@ public class Dolphin implements MainWindow {
         stateMgr.processLogin(true);
 
         // ログインユーザーの StampTree を読み込む
-        stampBox = new StampBoxPlugin();
+        StampBoxPlugin stampBox = new StampBoxPlugin();
         stampBox.setContext(Dolphin.this);
         stampBox.setStampTreeModels(result);
         stampBox.start();
+        providers.put(KEY_STAMP_BOX, stampBox);
 //s.oh^ 2014/08/19 ID権限
         //stampBox.getFrame().setVisible(true);
         if(Project.isOtherCare()) {
@@ -1010,7 +1012,7 @@ public class Dolphin implements MainWindow {
 //s.oh$
         
         // Stamp 保存
-        final IStampTreeModel treeTosave = stampBox.getUsersTreeTosave();
+        final IStampTreeModel treeTosave = getStampBox().getUsersTreeTosave();
 
         SimpleWorker worker = new SimpleWorker<Void, Void>() {
 
@@ -1690,8 +1692,11 @@ public class Dolphin implements MainWindow {
      */
     @Override
     public void showSchemaBox() {
-        ImageBox imageBox = new ImageBox();
-        imageBox.setContext(this);
+        ImageBox imageBox = (ImageBox) providers.get(KEY_IMAGE_BOX);
+        if (imageBox == null) {
+            imageBox = new ImageBox();
+            imageBox.setContext(this);
+        }
         imageBox.start();
     }
 
@@ -1700,6 +1705,7 @@ public class Dolphin implements MainWindow {
      */
     @Override
     public void showStampBox() {
+        StampBoxPlugin stampBox = getStampBox();
         if (stampBox != null) {
             stampBox.enter();
         }
@@ -1941,5 +1947,9 @@ public class Dolphin implements MainWindow {
     public static void main(String[] args) {
 //        Dolphin.getInstance().start(args.length==1 ? args[0] : "i18n");
         Dolphin.getInstance().start("dolphin");
+    }
+    
+    public StampBoxPlugin getStampBox() {
+        return (StampBoxPlugin) providers.get(KEY_STAMP_BOX);
     }
 }
