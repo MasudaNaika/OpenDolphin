@@ -51,6 +51,8 @@ public final class ClientContextStub {
     private boolean dolphin;
     private boolean asp;
     private boolean i18n;
+    
+    private boolean nimbus;
 
     /**
      * Creates a new ClientContextStub.
@@ -534,8 +536,9 @@ public final class ClientContextStub {
                     UIManager.setLookAndFeel(nimbusCls);
                 }
             }
-//masuda^ tweet            
-            if (UIManager.getLookAndFeel().getName().toLowerCase().startsWith("nimbus")) {
+//masuda^ tweet
+            nimbus = UIManager.getLookAndFeel().getName().toLowerCase().startsWith("nimbus");
+            if (nimbus) {
                 UIManager.put("TextPaneUI", BasicTextPaneUI.class.getName());
                 UIManager.put("TextPane.selectionBackground", new Color(57, 105, 138));
                 UIManager.put("TextPane.selectionForeground", Color.WHITE);
@@ -550,4 +553,8 @@ public final class ClientContextStub {
             Logger.getLogger(this.getClass().getName()).severe(e.getMessage());
         }        
     }   
+    
+    public boolean isNimbus() {
+        return nimbus;
+    }
 }
