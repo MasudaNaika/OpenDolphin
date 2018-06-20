@@ -542,6 +542,25 @@ public final class ClientContextStub {
                 }
             }
 //masuda^ tweet
+            Font FONT12 = new FontUIResource(Font.DIALOG, Font.PLAIN, 12);
+            Font FONT13 = new FontUIResource(Font.DIALOG, Font.PLAIN, 13);
+            ColorUIResource WHITE = new ColorUIResource(Color.WHITE);
+            ColorUIResource DARKER_GRAY = new ColorUIResource(117, 117, 117);
+            ColorUIResource LIGHT_GRAY = new ColorUIResource(Color.LIGHT_GRAY);
+            ColorUIResource ROLLOVER_COLOR = new ColorUIResource(216, 234, 249);
+            
+            // JTree
+            UIManager.put("Tree.paintLines", false);    // スタンプ箱で点線を表示しない
+            UIManager.put("Tree.rowHeight", 20);        // 高さ指定
+            UIManager.put("Tree.font", FONT12);
+
+            UIManager.put("TextPane.border", new BorderUIResource(new EmptyBorder(5, 8, 5, 8)));
+            UIManager.put("TextComponent.autoSelect", Boolean.FALSE);
+            UIManager.put("TextField.font", FONT12);
+            UIManager.put("Button.font", FONT12);
+            UIManager.put("Table.font", FONT12);
+            UIManager.put("TextPane.font", FONT13);
+                
             nimbusLaf = UIManager.getLookAndFeel().getName().toLowerCase().startsWith("nimbus");
             if (nimbusLaf) {
                 UIManager.put("TextPaneUI", BasicTextPaneUI.class.getName());
@@ -549,18 +568,6 @@ public final class ClientContextStub {
                 UIManager.put("TextPane.selectionForeground", new ColorUIResource(Color.WHITE));
                 UIManager.put("TextPane.border", new BorderUIResource(new EmptyBorder(4,6,4,6)));
             } else {
-                
-                Font FONT12 = new FontUIResource(Font.DIALOG, Font.PLAIN, 12);
-                ColorUIResource WHITE = new ColorUIResource(Color.WHITE);
-                ColorUIResource DARKER_GRAY = new ColorUIResource(117, 117, 117);
-                ColorUIResource LIGHT_GRAY = new ColorUIResource(Color.LIGHT_GRAY);
-                ColorUIResource ROLLOVER_COLOR = new ColorUIResource(216, 234, 249);
-                
-                 // JTree
-                UIManager.put("Tree.paintLines", false);    // スタンプ箱で点線を表示しない
-                UIManager.put("Tree.rowHeight", 20);        // 高さ指定
-                UIManager.put("Tree.font", FONT12);
-                
                 // JTabbedPane
                 Color bgColor = UIManager.getColor("Panel.background");
                 UIManager.put("TabbedPaneUI", ModannaTabbedPaneUI.class.getName());
@@ -580,12 +587,6 @@ public final class ClientContextStub {
                 UIManager.put("TabbedPane.selectedLabelShift", 0);
                 UIManager.put("TabbedPane.labelShift", 0);
                 UIManager.put("TabbedPane.tabCentered", true);
-                
-                UIManager.put("TextPane.border", new BorderUIResource(new EmptyBorder(5, 8, 5, 8)));
-                UIManager.put("TextComponent.autoSelect", Boolean.FALSE);
-                UIManager.put("TextField.font", FONT12);
-                UIManager.put("Button.font", FONT12);
-                UIManager.put("Table.font", FONT12);
             }
 //masuda$     
             // ToolBarの Dropdown menu制御
