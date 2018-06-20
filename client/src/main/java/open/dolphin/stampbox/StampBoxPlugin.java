@@ -340,13 +340,9 @@ public class StampBoxPlugin extends AbstractMainTool {
         cmdPanel.add(toolBtn);
         cmdPanel.add(publishBtn);
         cmdPanel.add(importBtn);
-        
-        JPanel p = new JPanel(new FlowLayout(FlowLayout.LEFT,10,5));
-        p.add(curBoxInfo);
-        JPanel p2 = new JPanel(new BorderLayout());
-        p2.add(cmdPanel, BorderLayout.CENTER);
-        p2.add(p, BorderLayout.SOUTH);
-        stampBoxPanel.add(p2, BorderLayout.NORTH);
+        cmdPanel.add(curBoxInfo);
+
+        stampBoxPanel.add(cmdPanel, BorderLayout.NORTH);
         
         // コンテントパネルを生成する
         content = new JPanel(new BorderLayout());
