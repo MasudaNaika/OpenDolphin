@@ -77,4 +77,9 @@ public class StubI18N extends ProjectStub {
     public boolean canGlobalPublish() {
         return false;
     }
+
+    @Override
+    public String getContextRoot() {
+        return CONTEXT_ROOT;
+    }
 }

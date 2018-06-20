@@ -7,12 +7,6 @@ import static open.dolphin.project.Project.CLAIM_SENDER;
  */
 public class StubDolphin extends ProjectStub {
     
-    // ASP & Pro
-//    private final String CONTEXT_ROOT = "/openDolphin/resources";
-    
-    // Docker
-    private final String CONTEXT_ROOT = "/dolphin/openSource";
-    
     private String baseURI;
     
     private String[] spec;
@@ -32,7 +26,7 @@ public class StubDolphin extends ProjectStub {
                     test = test.substring(0, len-1);
                 }
                 sb.append(test);
-                sb.append(CONTEXT_ROOT);
+                sb.append(getContextRoot());
                 baseURI = sb.toString();
             }
             //createSpec(baseURI);
@@ -128,5 +122,11 @@ public class StubDolphin extends ProjectStub {
     @Override
     public boolean canGlobalPublish() {
         return false;
+    }
+    
+    @Override
+    public String getContextRoot() {
+        String contextRoot = Project.getString(Project.CONTEXT_ROOT, Project.CONTEXT_ROOT_PRO);
+        return contextRoot;
     }
 }
