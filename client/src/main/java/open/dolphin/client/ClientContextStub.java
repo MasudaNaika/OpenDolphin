@@ -1,5 +1,6 @@
 package open.dolphin.client;
 
+import org.masudanaika.modanna.ui.ModannaTabbedPaneUI;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
@@ -11,6 +12,10 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.BorderUIResource;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.plaf.InsetsUIResource;
 import javax.swing.plaf.basic.BasicTextPaneUI;
 import open.dolphin.exception.DolphinException;
 import open.dolphin.infomodel.DepartmentModel;
@@ -52,7 +57,7 @@ public final class ClientContextStub {
     private boolean asp;
     private boolean i18n;
     
-    private boolean nimbus;
+    private boolean nimbusLaf;
 
     /**
      * Creates a new ClientContextStub.
@@ -537,12 +542,50 @@ public final class ClientContextStub {
                 }
             }
 //masuda^ tweet
-            nimbus = UIManager.getLookAndFeel().getName().toLowerCase().startsWith("nimbus");
-            if (nimbus) {
+            nimbusLaf = UIManager.getLookAndFeel().getName().toLowerCase().startsWith("nimbus");
+            if (nimbusLaf) {
                 UIManager.put("TextPaneUI", BasicTextPaneUI.class.getName());
-                UIManager.put("TextPane.selectionBackground", new Color(57, 105, 138));
-                UIManager.put("TextPane.selectionForeground", Color.WHITE);
-                UIManager.put("TextPane.border", new EmptyBorder(4,6,4,6));
+                UIManager.put("TextPane.selectionBackground", new ColorUIResource(57, 105, 138));
+                UIManager.put("TextPane.selectionForeground", new ColorUIResource(Color.WHITE));
+                UIManager.put("TextPane.border", new BorderUIResource(new EmptyBorder(4,6,4,6)));
+            } else {
+                
+                Font FONT12 = new FontUIResource(Font.DIALOG, Font.PLAIN, 12);
+                ColorUIResource WHITE = new ColorUIResource(Color.WHITE);
+                ColorUIResource DARKER_GRAY = new ColorUIResource(117, 117, 117);
+                ColorUIResource LIGHT_GRAY = new ColorUIResource(Color.LIGHT_GRAY);
+                ColorUIResource ROLLOVER_COLOR = new ColorUIResource(216, 234, 249);
+                
+                 // JTree
+                UIManager.put("Tree.paintLines", false);    // スタンプ箱で点線を表示しない
+                UIManager.put("Tree.rowHeight", 20);        // 高さ指定
+                UIManager.put("Tree.font", FONT12);
+                
+                // JTabbedPane
+                Color bgColor = UIManager.getColor("Panel.background");
+                UIManager.put("TabbedPaneUI", ModannaTabbedPaneUI.class.getName());
+                UIManager.put("TabbedPane.font", FONT12);
+                UIManager.put("TabbedPane.tabsOverlapBorder", false);
+                UIManager.put("TabbedPane.tabRunOverlay", 0);
+                UIManager.put("TabbedPane.tabInsets", new InsetsUIResource(3, 6, 3, 6));
+                UIManager.put("TabbedPane.tabAreaInsets", new InsetsUIResource(5, 2, 5, 2));
+                UIManager.put("TabbedPane.selectedTabPadInsets", new InsetsUIResource(0, 0, 0, 0));
+                UIManager.put("TabbedPane.contentBorderInsets", new InsetsUIResource(0, 0, 0, 0));
+                UIManager.put("TabbedPane.contentAreaColor", bgColor);
+                UIManager.put("TabbedPane.background", bgColor);
+                UIManager.put("TabbedPane.selectedForeground", WHITE);
+                UIManager.put("TabbedPane.selectedBackground", DARKER_GRAY);
+                UIManager.put("TabbedPane.borderColor", LIGHT_GRAY);
+                UIManager.put("TabbedPane.rolloverColor", ROLLOVER_COLOR);
+                UIManager.put("TabbedPane.selectedLabelShift", 0);
+                UIManager.put("TabbedPane.labelShift", 0);
+                UIManager.put("TabbedPane.tabCentered", true);
+                
+                UIManager.put("TextPane.border", new BorderUIResource(new EmptyBorder(5, 8, 5, 8)));
+                UIManager.put("TextComponent.autoSelect", Boolean.FALSE);
+                UIManager.put("TextField.font", FONT12);
+                UIManager.put("Button.font", FONT12);
+                UIManager.put("Table.font", FONT12);
             }
 //masuda$     
             // ToolBarの Dropdown menu制御
@@ -554,7 +597,7 @@ public final class ClientContextStub {
         }        
     }   
     
-    public boolean isNimbus() {
-        return nimbus;
+    public boolean isNimbusLaf() {
+        return nimbusLaf;
     }
 }

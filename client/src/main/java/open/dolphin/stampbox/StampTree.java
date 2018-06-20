@@ -73,14 +73,16 @@ public class StampTree extends JTree implements TreeModelListener {
         this.setDragEnabled(true);                              // Drag 可能
  
         // デフォルトのセルレンダラーを置き換える
-        TreeCellRenderer oldRenderer = this.getCellRenderer();
-        this.setCellRenderer(new StampTreeRenderer(oldRenderer));
+        this.setCellRenderer(new StampTreeRenderer());
         
         // Listens TreeModelEvent
         model.addTreeModelListener(StampTree.this);
         
         // Enable ToolTips
         enableToolTips(true);
+        
+        // root nodeに展開アイコン表示 2017/10/30
+        setShowsRootHandles(true);
         
         // update RowHeight
         int h = getFontMetrics(getFont()).getHeight() + ROW_HEIGHT_MARGIN;
@@ -1348,19 +1350,14 @@ public class StampTree extends JTree implements TreeModelListener {
         
         private final Color TEXT_COLOR = new Color(0,0,153);
         private final Color DICEASE_COLOR = new Color(203,0,102);
-        
-        private final TreeCellRenderer renderer;
-        
-        public StampTreeRenderer(TreeCellRenderer renderer) {
-            this.renderer = renderer;
-        }
+
         
         @Override
         public Component getTreeCellRendererComponent(JTree tree, Object value,
             boolean isSelected, boolean expanded,
             boolean leaf, int row, boolean hasFocus) {
             
-            JLabel c = (JLabel)renderer.getTreeCellRendererComponent(
+            super.getTreeCellRendererComponent(
                 tree, value, isSelected, expanded, leaf, row, hasFocus);
             
             if (leaf) {
@@ -1372,36 +1369,38 @@ public class StampTree extends JTree implements TreeModelListener {
                 
 //minagawa^ Icon Server                
                 //c.setIcon(ClientContext.getImageIcon("move2_16.gif"));  // icon
-                c.setIcon(ClientContext.getImageIconArias("icon_stamp_drag_leaf"));  // icon
+                setIcon(ClientContext.getImageIconArias("icon_stamp_drag_leaf"));  // icon
 //minagawa$                
-                c.setToolTipText(mi.getStampMemo());  // toolTips
+                setToolTipText(mi.getStampMemo());  // toolTips
                         
                 if (isSelected) {
-                    c.setForeground(getTextSelectionColor());
+                    setForeground(getTextSelectionColor());
                     
                 } else {
                     
                     if (treeEntity.equals(IInfoModel.ENTITY_PATH) && entity.equals(IInfoModel.ENTITY_DIAGNOSIS)) {
-                        c.setForeground(DICEASE_COLOR);
+                        setForeground(DICEASE_COLOR);
 
                     } else if (treeEntity.equals(IInfoModel.ENTITY_PATH) && entity.equals(IInfoModel.ENTITY_TEXT)) {
-                        c.setForeground(TEXT_COLOR);
+                        setForeground(TEXT_COLOR);
 
                     } else {
-                        c.setForeground(getTextNonSelectionColor());
+                        setForeground(getTextNonSelectionColor());
                     }
                 }
                 
             } else {
                 if (isSelected) {
-                    c.setForeground(getTextSelectionColor());
+                    setForeground(getTextSelectionColor());
                     
                 } else {
-                    c.setForeground(getTextNonSelectionColor());
+                    setForeground(getTextNonSelectionColor());
                 }
             }
             
-            return c;
+            setBackgroundNonSelectionColor(ROW_COLORS[row & 1]);
+            
+            return this;
         } 
     }
     

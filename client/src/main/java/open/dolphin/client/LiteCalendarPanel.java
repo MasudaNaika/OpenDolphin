@@ -104,6 +104,11 @@ public final class LiteCalendarPanel extends JPanel implements PropertyChangeLis
         // カラムのドラッグ・リサイズを不許可
         table.getTableHeader().setResizingAllowed(false);
         table.getTableHeader().setReorderingAllowed(false);
+        
+        table.setShowHorizontalLines(true);
+        table.setShowVerticalLines(false);
+        table.setGridColor(new Color(250, 250, 250));
+        table.setRowSelectionAllowed(false);
 //masuda$
         setAutoResizeMode(autoResizeMode);
         table.setBackground(calendarBack);

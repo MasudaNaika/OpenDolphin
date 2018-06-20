@@ -147,13 +147,10 @@ public class Dolphin implements MainWindow {
 
     public void start(String mode) {
  
-//masuda^
-        // アンチエイリアスの設定は最初がいい？
         System.setProperty("awt.useSystemAAFontSettings", "on");
         
          // 排他処理用のUUIDを決める
         clientUUID = UUID.randomUUID().toString();
-//masuda$
 
         // ClientContext を生成する
         ClientContextStub stub = new ClientContextStub(mode);

@@ -205,6 +205,9 @@ public class StampBoxPlugin extends AbstractMainTool {
         WindowSupport ws = WindowSupport.create(title);
         frame = ws.getFrame();
 //s.oh$
+        // menu not visible
+        ws.getMenuBar().setVisible(false);
+        
         glass = new BlockGlass();
         frame.setGlassPane(glass);
         frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);

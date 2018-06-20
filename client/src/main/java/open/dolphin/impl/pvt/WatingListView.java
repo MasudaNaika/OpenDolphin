@@ -44,6 +44,7 @@ public class WatingListView extends JPanel {
 	underGoLbl.setText(labelText);
 	underGoLbl.setAlignmentY(BOTTOM_ALIGNMENT);
 	panel.add(underGoLbl);
+        panel.add(Box.createHorizontalStrut(5));
 /*
         JLabel openLbl = new JLabel();
         openLbl.setIcon(ClientContext.getImageIcon("open_16.gif"));

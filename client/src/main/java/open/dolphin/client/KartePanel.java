@@ -101,9 +101,9 @@ public abstract class KartePanel extends Panel2 {
     @Override
     public Dimension getPreferredSize() {
         Dimension d = super.getPreferredSize();
-//        if (ClientContext.isNimbus()) {
+        if (ClientContext.getClientContextStub().isNimbusLaf()) {
             d.height += nimbusBottomMargin;
-//        }
+        }
         return d;
     }
 }
