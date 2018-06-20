@@ -8,6 +8,7 @@ import java.awt.event.FocusListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import javax.swing.*;
@@ -137,6 +138,12 @@ public final class BaseEditor extends AbstractStampEditor {
 
         // 診療行為区分
         String c007 = getClassCode()!=null ? getClassCode() : getImplied007();
+        JComboBox cmb = view.getShinkuCombo();
+        int index = cmb.getSelectedIndex();
+        if (index != -1 && index != 0) {
+            ShinkuItem si = (ShinkuItem) cmb.getSelectedItem();
+            c007 = si.getKey();
+        }
 
         if (c007 != null) {
 
@@ -896,6 +903,23 @@ public final class BaseEditor extends AbstractStampEditor {
         view.getClearBtn().addActionListener((ActionEvent e) -> {
             clear();
         });
+        
+        // 診療行為区分コンボ
+        ResourceBundle resBundle = ClientContext.getClaimBundle();
+        JComboBox cmb = view.getShinkuCombo();
+        cmb.removeAllItems();
+        cmb.setMaximumRowCount(20);
+        cmb.setToolTipText("診療行為区分を強制指定するときに使用します。");
+        cmb.addItem("診療行為区分指定");
+        cmb.setPrototypeDisplayValue("12345678901234567890123456789012");
+        for (int i = 100; i < 1000; ++i) {
+            try {
+                String key = String.valueOf(i);
+                String value = resBundle.getString(key);
+                cmb.addItem(new ShinkuItem(key, value));
+            } catch (MissingResourceException ex) {
+            }
+        }
     }
 
 //    public BaseEditor() {
@@ -909,5 +933,29 @@ public final class BaseEditor extends AbstractStampEditor {
     public BaseEditor(String entity, boolean mode) {
         super(entity, mode);
         initComponents();
+    }
+    
+    private static class ShinkuItem {
+        
+        private final String key;
+        private final String value;
+        
+        private ShinkuItem(String key, String value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public String getKey() {
+            return key;
+        }
+
+        public String getValue() {
+            return value;
+        }
+
+        @Override
+        public String toString() {
+            return key + ":" + value;
+        }
     }
 }

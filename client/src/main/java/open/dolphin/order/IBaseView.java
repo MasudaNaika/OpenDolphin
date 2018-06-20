@@ -76,4 +76,5 @@ public interface IBaseView {
     public javax.swing.JLabel getSearchLabel();
 //s.oh$
     
+    public javax.swing.JComboBox<String> getShinkuCombo();
 }

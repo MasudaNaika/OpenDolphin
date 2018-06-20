@@ -3,17 +3,15 @@
 ##-------------------------------------
 <HTML><BODY><TT><FONT SIZE="${hints.getFontSize()}" COLOR="${hints.getBackgroundAs16String()}">
 <TABLE BORDER="${hints.getBorder()}" CELLSPACING="${hints.getCellSpacing()}" CELLPADDING="${hints.getCellPadding()}">
-  <TR BGCOLOR="${hints.getLabelColorAs16String()}">
-#if (${hints.getShowStampName()})
+<TR BGCOLOR="${hints.getLabelColorAs16String()}">
 #if ($stampName == "新規スタンプ" || $stampName == "エディタから発行..." || $stampName == "チェックシート")
-     <TD COLSPAN="3">RP</TD>
+     <TD NOWRAP COLSPAN="3">RP</TD>
 #else
-     <TD COLSPAN="3">RP (${stampName})</TD>
+    ## 院内・院外処方は１行目の右端に表示する
+    <TD NOWRAP>RP) $stampName</TD>
+    <TD NOWRAP COLSPAN="2" ALIGN="RIGHT">${model.getMemo().replace("処方", "")}/${model.getClassCode()}</TD>
 #end
-#else
-    <TD COLSPAN="3">RP</TD>
-#end
-  </TR>
+</TR>
 #foreach ($item in $model.getClaimItem())
   <TR>
 #if ($item.getNumber())
@@ -31,14 +29,9 @@
      <TD COLSPAN="3">${model.getAdminDisplayString()}</TD>
   </TR>
 #if ($model.getAdminMemo())
-  <TR>
-     <TD COLSPAN="2">${model.getAdminMemo()}</TD>
-     <TD>$!{model.getMemo()}</TD>
-  </TR>
-#else
-  <TR>
-     <TD COLSPAN="3">$!{model.getMemo()}</TD>
-  </TR>
+<TR>
+    <TD>${model.getAdminMemo()}</TD>
+</TR>
 #end
 </TABLE>
 </BODY></HTML>
