@@ -6,12 +6,15 @@
 	<TR BGCOLOR="${hints.getLabelColorAs16String()}">
 #if (${hints.getShowStampName()})
 #if ($stampName == "新規スタンプ" || $stampName == "エディタから発行..." || $stampName == "チェックシート")
-		<TD COLSPAN="3">${model.getOrderName()}</TD>
+<TD NOWRAP>${model.getOrderName()}</TD>
+<TD NOWRAP COLSPAN="2" ALIGN="RIGHT">${model.getClassCode()}</TD></TR>
 #else
-		<TD COLSPAN="3">${model.getOrderName()}(${stampName})</TD>
+<TD NOWRAP>${model.getOrderName()}($stampName)</TD>
+<TD NOWRAP COLSPAN="2" ALIGN="RIGHT">${model.getClassCode()}</TD></TR>
 #end
 #else
-                <TD COLSPAN="3">${model.getOrderName()}</TD>
+<TD NOWRAP>${model.getOrderName()}</TD>
+<TD NOWRAP COLSPAN="2" ALIGN="RIGHT">${model.getClassCode()}</TD></TR>
 #end
 	</TR>
 	<TR>

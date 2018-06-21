@@ -800,7 +800,9 @@ public final class RadEditor extends AbstractStampEditor {
 
         //searchResultTable.setDefaultRenderer(Object.class, new TensuItemRenderer(passPattern, shinkuPattern));
         if (Project.getBoolean("masterItemColoring", true)) {
-            searchResultTable.setDefaultRenderer(Object.class, new TensuItemRenderer(passPattern, shinkuPattern));
+            TensuItemRenderer renderer = new TensuItemRenderer(passPattern, shinkuPattern);
+            renderer.setTable(searchResultTable);
+            renderer.setDefaultRenderer();
         } else {
             //searchResultTable.setDefaultRenderer(Object.class, new OddEvenRowRenderer());
             StripeTableCellRenderer str = new StripeTableCellRenderer();

@@ -16,8 +16,8 @@
   <TR>
 #if ($item.getNumber())
     <TD>・${item.getName()}</TD>
-    <TD> X ${item.getNumber()}</TD>
-    <TD>$!{item.getUnit()}</TD>
+    <TD NOWRAP ALIGN="RIGHT"> x ${item.getNumber()}</TD>
+    <TD NOWRAP> $!{item.getUnit().replace("カプセル", "Ｃ")}</TD>
 #else
     <TD>・${item.getName()}</TD>
     <TD>　</TD>

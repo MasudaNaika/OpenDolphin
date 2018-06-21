@@ -781,7 +781,9 @@ public final class InjectionEditor extends AbstractStampEditor {
         }
         
         if (Project.getBoolean("masterItemColoring", true)) {
-            searchResultTable.setDefaultRenderer(Object.class, new TensuItemRenderer(passPattern, shinkuPattern));
+            TensuItemRenderer renderer = new TensuItemRenderer(passPattern, shinkuPattern);
+            renderer.setTable(searchResultTable);
+            renderer.setDefaultRenderer();
         } else {
             StripeTableCellRenderer str = new StripeTableCellRenderer();
             str.setTable(searchResultTable);

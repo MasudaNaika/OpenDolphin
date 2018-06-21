@@ -1,6 +1,8 @@
 package open.dolphin.client;
 
 import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
@@ -79,6 +81,7 @@ public final class StampHolder extends AbstractComponentHolder implements Compon
         setBackground(background);
 //masuda^        
         setBorder(nonSelectedBorder);
+        setFont(new Font(Font.SANS_SERIF, Font.PLAIN, h.getFontSize()));
 //masuda$        
 ////s.oh^ 2014/09/30 スタンプの色変更
 //        if(Project.getBoolean(Project.CHANGE_STAMP_COLOR)) {
@@ -466,5 +469,25 @@ public final class StampHolder extends AbstractComponentHolder implements Compon
         } catch (ParseErrorException | MethodInvocationException | ResourceNotFoundException | IOException e) {
             //e.printStackTrace(System.err);
         }
+    }
+    
+    // StampRenderingHintsのlineSpacingを0にすると、ラベルの上部に隙間ができてしまう
+    //　見栄えが悪いので線を追加描画する
+    private static final Color LBL_COLOR = new Color(0xFF, 0xCE, 0xD9);
+    @Override
+    protected void paintComponent(Graphics g) {
+
+        super.paintComponent(g);
+        Color c = g.getColor();
+        Color labelColor = hints.getLabelColor();
+        if (labelColor == null) {
+            labelColor = LBL_COLOR;
+        }
+        g.setColor(labelColor);
+        int w = getWidth() - 2;
+        int h = g.getFontMetrics().getHeight() + 2;
+        g.drawLine(1, 1, w, 1);
+        g.drawLine(1, h, w, h);
+        g.setColor(c);
     }
 }

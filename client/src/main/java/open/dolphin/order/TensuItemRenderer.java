@@ -3,18 +3,17 @@ package open.dolphin.order;
 import java.awt.Color;
 import java.awt.Component;
 import java.util.regex.Pattern;
-import javax.swing.JLabel;
 import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
 import open.dolphin.infomodel.ClaimConst;
 import open.dolphin.infomodel.TensuMaster;
 import open.dolphin.table.ListTableModel;
+import open.dolphin.table.StripeTableCellRenderer;
 
 /**
  *
  * @author Kazushi Minagawa.
  */
-public final class TensuItemRenderer extends JLabel implements TableCellRenderer {
+public final class TensuItemRenderer extends StripeTableCellRenderer {
     
     private static final Color THEC_COLOR = new Color(204,255,102);
     private static final Color MEDICINE_COLOR = new Color(255,204,0);

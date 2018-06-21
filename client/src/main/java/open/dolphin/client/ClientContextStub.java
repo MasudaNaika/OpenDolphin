@@ -542,8 +542,8 @@ public final class ClientContextStub {
                 }
             }
 //masuda^ tweet
-            Font FONT12 = new FontUIResource(Font.DIALOG, Font.PLAIN, 12);
-            Font FONT13 = new FontUIResource(Font.DIALOG, Font.PLAIN, 13);
+            Font FONT12 = new FontUIResource(Font.SANS_SERIF, Font.PLAIN, 12);
+            Font FONT13 = new FontUIResource(Font.SANS_SERIF, Font.PLAIN, 13);
             ColorUIResource WHITE = new ColorUIResource(Color.WHITE);
             ColorUIResource DARKER_GRAY = new ColorUIResource(117, 117, 117);
             ColorUIResource LIGHT_GRAY = new ColorUIResource(Color.LIGHT_GRAY);

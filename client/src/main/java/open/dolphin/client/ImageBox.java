@@ -1,10 +1,10 @@
 package open.dolphin.client;
 
 import java.awt.*;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.beans.EventHandler;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -31,7 +31,7 @@ public class ImageBox extends AbstractMainTool {
     
     private String imageLocation;
     private JTabbedPane tabbedPane;
-    private JButton refreshBtn;
+//    private JButton refreshBtn;
     private int columnCount = DEFAULT_COLUMN_COUNT;
     private int imageWidth = DEFAULT_IMAGE_WIDTH;
     private int imageHeight = DEFAULT_IMAGE_HEIGHT;
@@ -143,20 +143,32 @@ public class ImageBox extends AbstractMainTool {
         java.util.ResourceBundle bundle = ClientContext.getMyBundle(ImageBox.class);
         
         // 更新ボタンを生成する
-        refreshBtn = new JButton(ClientContext.getImageIconArias("icon_refresh_small"));        
-        refreshBtn.addActionListener((ActionListener) EventHandler.create(ActionListener.class, this, "refresh"));
-        String toolTipText = bundle.getString("toolTipText.refresh");
-        refreshBtn.setToolTipText(toolTipText);
-        JPanel btnPanel = new JPanel();
-        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
-        btnPanel.add(Box.createHorizontalGlue());
-        btnPanel.add(refreshBtn);
+//        refreshBtn = new JButton(ClientContext.getImageIconArias("icon_refresh_small"));        
+//        refreshBtn.addActionListener((ActionListener) EventHandler.create(ActionListener.class, this, "refresh"));
+//        String toolTipText = bundle.getString("toolTipText.refresh");
+//        refreshBtn.setToolTipText(toolTipText);
+//        JPanel btnPanel = new JPanel();
+//        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.X_AXIS));
+//        btnPanel.add(Box.createHorizontalGlue());
+//        btnPanel.add(refreshBtn);
+
+        tabbedPane.setToolTipText("ダブルクリックで更新します");
+        tabbedPane.addMouseListener(new MouseAdapter(){
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() == 2) {
+                    refresh();
+                }
+            }
+
+        });
         
         // 全体を配置する
         JPanel p = new JPanel(new BorderLayout());
-        p.add(btnPanel, BorderLayout.NORTH);
+//        p.add(btnPanel, BorderLayout.NORTH);
         p.add(tabbedPane, BorderLayout.CENTER);
-        p.setBorder(BorderFactory.createEmptyBorder(12,12,11,11));
+        p.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         
         String title = bundle.getString("title.window");
         frame = new JDialog((JFrame) null, title, false);

@@ -28,6 +28,7 @@ public class WatingListView extends JPanel {
 //minagawa$        
         kutuBtn.setAlignmentY(BOTTOM_ALIGNMENT);
         panel.add(kutuBtn);
+        panel.add(Box.createHorizontalStrut(5));
 
         pvtInfoLbl = new JLabel();
         pvtInfoLbl.setFont(new Font("Lucida Grande", 0, 10));
