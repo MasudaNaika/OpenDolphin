@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import open.dolphin.helper.ComponentMemory;
+import open.dolphin.helper.WindowSupport;
 
 /**
  * ImageBox
@@ -41,7 +42,7 @@ public class ImageBox extends AbstractMainTool {
     private final int defaultLocX = 537;
     private final int defaultLocY = 22;
     
-    private JDialog frame;
+    private JFrame frame;
 
     private int systemSchemaIndex;
     
@@ -171,20 +172,22 @@ public class ImageBox extends AbstractMainTool {
         p.setBorder(BorderFactory.createEmptyBorder(0, 5, 5, 5));
         
         String title = bundle.getString("title.window");
-        frame = new JDialog((JFrame) null, title, false);
-        ClientContext.setDolphinIcon(frame);
+        WindowSupport ws = WindowSupport.create(title);
+        ws.getMenuBar().setVisible(false);
+        frame = ws.getFrame();
+        
         ComponentMemory cm = new ComponentMemory(frame,
                 new Point(defaultLocX,defaultLocY),
                 new Dimension(defaultWidth, defaultHeight),
                 this);
         cm.setToPreferenceBounds();
-        frame.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                processWindowClosing();
-            }
-        });
+        frame.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+//        frame.addWindowListener(new WindowAdapter() {
+//            @Override
+//            public void windowClosing(WindowEvent e) {
+//                processWindowClosing();
+//            }
+//        });
         frame.getContentPane().add(p);
     }
     

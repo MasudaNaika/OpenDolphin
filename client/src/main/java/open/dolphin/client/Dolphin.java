@@ -1693,6 +1693,7 @@ public class Dolphin implements MainWindow {
         if (imageBox == null) {
             imageBox = new ImageBox();
             imageBox.setContext(this);
+            providers.put(KEY_IMAGE_BOX, imageBox);
         }
         imageBox.start();
     }
