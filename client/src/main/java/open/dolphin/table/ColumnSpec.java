@@ -53,4 +53,12 @@ public final class ColumnSpec {
     public void setWidth(int cls) {
         this.width = cls;
     }
+    
+    public boolean isSameSpec(ColumnSpec test) {
+        boolean same = true;
+        same &= (name != null && name.equals(test.getName()));
+        same &= (cls != null && cls.equals(test.getCls()));
+        same &= (method != null && method.equals(test.getMethod()));
+        return same;
+    }
 }

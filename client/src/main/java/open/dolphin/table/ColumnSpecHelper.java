@@ -1,11 +1,13 @@
 package open.dolphin.table;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.TableColumnModelEvent;
@@ -19,7 +21,7 @@ import open.dolphin.project.Project;
  */
 public class ColumnSpecHelper {
     
-    private static final String CAMMA = ",";
+    private static final char CAMMA = ',';
     
     private JTable table;
     private final String specName;
@@ -84,24 +86,63 @@ public class ColumnSpecHelper {
     }
     
     public void updateColumnWidth() {
+        SwingUtilities.invokeLater(() -> {
+            updateColumnWidth(table);
+        });
+    }
+
+    public void updateColumnWidth(JTable tbl) {
 
         for (int i = 0; i < columnSpecs.size(); ++i) {
             ColumnSpec cs = columnSpecs.get(i);
             int width = cs.getWidth();
-            TableColumn tc = table.getColumnModel().getColumn(i);
+            TableColumn tc = tbl.getColumnModel().getColumn(i);
             if (width != 0) {
                 tc.setMaxWidth(Integer.MAX_VALUE);
                 tc.setPreferredWidth(width);
                 tc.setWidth(width);
+                tc.setResizable(true);
             } else {
-                tc.setMaxWidth(0);
                 tc.setMinWidth(0);
+                tc.setMaxWidth(0);
                 tc.setPreferredWidth(0);
                 tc.setWidth(0);
-
+                tc.setResizable(false);
             }
         }
-        table.repaint();
+        tbl.revalidate();
+        tbl.repaint();
+
+    }
+    
+    public void setColumnVisible(String propName, boolean visible) {
+
+        if (table == null) {
+            return;
+        }
+
+//        SwingUtilities.invokeLater(() -> {
+            int col = getColumnPosition(propName);
+
+            TableColumn tc = table.getColumnModel().getColumn(col);
+            if (visible) {
+                int width = columnSpecs.get(col).getWidth();
+                tc.setMaxWidth(Integer.MAX_VALUE);
+                tc.setPreferredWidth(width);
+                tc.setWidth(width);
+                tc.setResizable(true);
+            } else {
+                tc.setMinWidth(0);
+                tc.setMaxWidth(0);
+                tc.setPreferredWidth(0);
+                tc.setWidth(0);
+                tc.setResizable(false);
+            }
+            table.revalidate();
+            table.repaint();
+
+//        });
+
     }
     
     public int getColumnPosition(String propName) {
@@ -154,6 +195,9 @@ public class ColumnSpecHelper {
             public void columnMoved(TableColumnModelEvent tcme) {
                 int from = tcme.getFromIndex();
                 int to = tcme.getToIndex();
+                if (from == to) {
+                    return;
+                }
                 ColumnSpec moved = columnSpecs.remove(from);
                 columnSpecs.add(to, moved);
             }
@@ -169,81 +213,75 @@ public class ColumnSpecHelper {
     }
     
     public void loadProperty() {
-
-        boolean first = true;
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < columnNames.length; i++) {
-            if (!first) {
-                sb.append(CAMMA);
-            } else {
-                first = false;
-            }
-            String name = columnNames[i];
-            String method = propNames[i];
-            String cls = columnClasses[i].getName();
-            String width = String.valueOf(columnWidth[i]);
-            sb.append(name).append(CAMMA);
-            sb.append(method).append(CAMMA);
-            sb.append(cls).append(CAMMA);
-            sb.append(width);
-        }
-        String defaultLine = sb.toString();
-
-        // preference から
-        String line = Project.getString(specName, defaultLine);
-
-        // 仕様を保存
-        columnSpecs = new ArrayList<>();
-        String[] params = line.split(",");
-
-        // 保存していた名称・メソッド・クラスが同じか調べる
-        int len = params.length / 4;
-        // 項目数が同じか？
-        boolean same = len == columnNames.length;
-        // 各項目は同じか
-        if (same) {
-            List<String> savedColumns = new ArrayList<>();
-            List<String> savedProps = new ArrayList<>();
-            List<String> savedClasses = new ArrayList<>();
-            for (int i = 0; i < len; ++i) {
-                int k = 4 * i;
-                savedColumns.add(params[k]);
-                savedProps.add(params[k + 1]);
-                savedClasses.add(params[k + 2]);
-            }
-            for (int i = 0; i < len; ++i) {
-                savedColumns.remove(columnNames[i]);
-                savedProps.remove(propNames[i]);
-                savedClasses.remove(columnClasses[i].getName());
-            }
-            // 同じならば空のはず
-            same &= savedColumns.isEmpty() && savedProps.isEmpty() && savedClasses.isEmpty();
-        }
-        // 保存していた情報数が現在と違う場合は破棄
-        if (!same) {
-            params = defaultLine.split(",");
-            len = columnNames.length;
+        
+        
+        List<ColumnSpec> defaultSpecs = new ArrayList<>();
+        
+        for (int i = 0; i < columnNames.length; ++i) {
+            ColumnSpec cs = new ColumnSpec();
+            cs.setName(columnNames[i]);
+            cs.setMethod(propNames[i]);
+            cs.setCls(columnClasses[i].getName());
+            cs.setWidth(columnWidth[i]);
+            defaultSpecs.add(cs);
         }
         
-        // columnSpecリストを作成する
-        for (int i = 0; i < len; i++) {
-            int k = 4 * i;
-            String name = params[k];
-            String method = params[k + 1];
-            String cls = params[k + 2];
-            int width = 50;
-            try {
-                width = Integer.parseInt(params[k + 3]);
-            } catch (Exception ex) {
+        // preference から
+        List<ColumnSpec> loadSpecs =new ArrayList<>();
+        String line = Project.getString(specName);
+        try {
+            String[] params = line.split(",");
+            int len = params.length / 4;
+
+            // columnSpecリストを作成する
+            for (int i = 0; i < len; i++) {
+                int k = 4 * i;
+                String name = params[k];
+                String method = params[k + 1];
+                String cls = params[k + 2];
+                int width = 50;
+                try {
+                    width = Integer.parseInt(params[k + 3]);
+                } catch (Exception ex) {
+                }
+                ColumnSpec cp = new ColumnSpec(name, method, cls, width);
+                loadSpecs.add(cp);
             }
-            ColumnSpec cp = new ColumnSpec(name, method, cls, width);
-            columnSpecs.add(cp);
+        } catch (Exception ex) {
+        }
+
+        columnSpecs = new ArrayList<>();
+        // 合致するものは引き継ぐ。順番をキープ
+        for (ColumnSpec loadCs : loadSpecs) {
+            for (ColumnSpec defaultSpec : defaultSpecs) {
+                if (loadCs.isSameSpec(defaultSpec)) {
+                    columnSpecs.add(loadCs);
+                    break;
+                }
+            }
+        }
+        // 不足分を追加する
+        for (ColumnSpec defaultSpec : defaultSpecs) {
+            boolean found = false;
+            for (ColumnSpec test : columnSpecs) {
+                if (defaultSpec.isSameSpec(test)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                columnSpecs.add(defaultSpec);
+            }
         }
     }
     
     public void saveProperty() {
+        saveProperty(table);
+    }
+    
+    public void saveProperty(JTable tbl) {
         
-        if (columnSpecs == null) {
+        if (columnSpecs == null || tbl == null) {
             return;
         }
 
@@ -256,7 +294,7 @@ public class ColumnSpecHelper {
                 first = false;
             }
             ColumnSpec cs = columnSpecs.get(i);
-            cs.setWidth(table.getColumnModel().getColumn(i).getWidth());
+            cs.setWidth(tbl.getColumnModel().getColumn(i).getWidth());
             sb.append(cs.getName()).append(CAMMA);
             sb.append(cs.getMethod()).append(CAMMA);
             sb.append(cs.getCls()).append(CAMMA);
@@ -268,22 +306,27 @@ public class ColumnSpecHelper {
     }
     
     public JMenu createMenuItem() {
-        
-        java.util.ResourceBundle bundle = java.util.ResourceBundle.getBundle("open/dolphin/table/resources/ColumnSpecHelper");
 
-        JMenu menu = new JMenu(bundle.getString("menuText.displayColumn"));
+        final JMenu menu = new JMenu("表示カラム");
         for (ColumnSpec cs : columnSpecs) {
-//minagawa^ lsctest 全てのカラムを非表示にする人がいるため
-            if (cs.getName().equals(bundle.getString("column.number"))){
-                continue;
-            }
-//minagawa$            
-            final MyCheckBoxMenuItem cbm = new MyCheckBoxMenuItem(cs.getName());
+            final ColumnSpecMenuItem cbm = new ColumnSpecMenuItem(cs.getName());
             cbm.setColumnSpec(cs);
             if (cs.getWidth() != 0) {
                 cbm.setSelected(true);
             }
             cbm.addActionListener((ActionEvent e) -> {
+                // 全部非表示にしちゃう人があるらしい… ٩(๑`^´๑)۶
+                boolean allHide = true;
+                for (Component c : menu.getMenuComponents()) {
+                    JCheckBoxMenuItem cbm1 = (JCheckBoxMenuItem) c;
+                    if (cbm1.isSelected()) {
+                        allHide = false;
+                        break;
+                    }
+                }
+                if (allHide) {
+                    return;
+                }
                 if (cbm.isSelected()) {
                     cbm.getColumnSpec().setWidth(50);
                 } else {
@@ -296,11 +339,11 @@ public class ColumnSpecHelper {
         return menu;
     }
             
-    private class MyCheckBoxMenuItem extends JCheckBoxMenuItem {
+    private static class ColumnSpecMenuItem extends JCheckBoxMenuItem {
         
         private ColumnSpec cs;
         
-        private MyCheckBoxMenuItem(String name) {
+        private ColumnSpecMenuItem(String name) {
             super(name);
         }
         
