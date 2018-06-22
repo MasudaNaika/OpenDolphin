@@ -204,7 +204,7 @@ public final class ClaimResource_ja extends ListResourceBundle {
             {"SHIN_LABO_TEST", "^6"},
             {"SHIN_RADIOLOGY_ORDER", "^7"},
             {"SHIN_OTHER_ORDER", "^8"},
-            {"SHIN_GENERAL_ORDER", "\\\\d"},
+            {"SHIN_GENERAL_ORDER", "\\d{3}"},
             // エディタに表示する名前
             {"NAME_BASE_CHARGE", "診断料"},
             {"NAME_INSTRACTION_CHARGE", "管理料"}, // 指導・在宅

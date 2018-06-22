@@ -1,7 +1,6 @@
 package open.dolphin.impl.login;
 
 import java.awt.Dimension;
-import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
@@ -33,7 +32,7 @@ import open.dolphin.utilities.control.RssReaderPane;
  */
 public abstract class AbstractLoginDialog implements ILoginDialog {
     
-    protected JDialog dialog;
+    protected JFrame dialog;
     protected BlockGlass blockGlass;
     
     // 認証制御用
@@ -141,7 +140,8 @@ public abstract class AbstractLoginDialog implements ILoginDialog {
         
         String title = ClientContext.getString("loginDialog.title");
         String windowTitle = ClientContext.getFrameTitle(title);
-        dialog = new JDialog((Frame)null, windowTitle, true);
+        dialog = new JFrame(windowTitle);
+        dialog.setResizable(false);
         dialog.setTitle(windowTitle);
         dialog.getRootPane().setDefaultButton(getLoginButton());
         blockGlass = new BlockGlass();
