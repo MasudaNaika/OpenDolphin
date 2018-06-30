@@ -6,9 +6,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
-import org.jdom.Document;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 /**
  *
@@ -296,7 +297,7 @@ public class AbstractResource {
         try {
             StringReader sr = new StringReader(xml);
             Document doc = docBuilder.build(new BufferedReader(sr));
-            org.jdom.Element root = (org.jdom.Element) doc.getRootElement();
+            Element root = doc.getRootElement();
 
             writeChildren(sb, root);
 
@@ -312,7 +313,7 @@ public class AbstractResource {
      * @param sb contentのテキストを集積するためのStringBuilder
      * @param current XML要素
      */
-    protected void writeChildren(StringBuilder sb, org.jdom.Element current) {
+    protected void writeChildren(StringBuilder sb, Element current) {
 
         int eType = -1;
         String eName = current.getName();
@@ -364,7 +365,7 @@ public class AbstractResource {
             Iterator iterator = children.iterator();
 
             while (iterator.hasNext()) {
-                org.jdom.Element child = (org.jdom.Element) iterator.next();
+                Element child = (Element) iterator.next();
                 writeChildren(sb, child);
             }
         }
@@ -454,7 +455,7 @@ public class AbstractResource {
         debug("endComponent");
     }
 
-    protected void startIcon(StringBuilder sb, org.jdom.Element current) {
+    protected void startIcon(StringBuilder sb, Element current) {
 
         String name = current.getChildTextTrim("name");
 

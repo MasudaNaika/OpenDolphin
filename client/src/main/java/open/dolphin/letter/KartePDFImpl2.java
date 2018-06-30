@@ -47,8 +47,8 @@ import open.dolphin.infomodel.BundleDolphin;
 import open.dolphin.infomodel.ModuleModel;
 import open.dolphin.infomodel.SchemaModel;
 import open.dolphin.project.Project;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 /**
  *
@@ -210,8 +210,8 @@ public class KartePDFImpl2 {
         
         try {
             StringReader sr = new StringReader(xml);
-            org.jdom.Document doc = docBuilder.build(new BufferedReader(sr));
-            org.jdom.Element root = (org.jdom.Element) doc.getRootElement();
+            org.jdom2.Document doc = docBuilder.build(new BufferedReader(sr));
+            org.jdom2.Element root = doc.getRootElement();
             
             writeChildren(root);
         }
@@ -227,7 +227,7 @@ public class KartePDFImpl2 {
      * 子要素をパースする。
      * @param current 要素
      */
-    private void writeChildren(org.jdom.Element current) {
+    private void writeChildren(org.jdom2.Element current) {
         
         int eType = -1;
         String eName = current.getName();
@@ -263,7 +263,7 @@ public class KartePDFImpl2 {
             Iterator iterator = children.iterator();
             
             while (iterator.hasNext()) {
-                org.jdom.Element child = (org.jdom.Element) iterator.next();
+                org.jdom2.Element child = (org.jdom2.Element) iterator.next();
                 writeChildren(child);
             }
             if(eType == TT_PARAGRAPH) {

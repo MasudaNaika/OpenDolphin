@@ -243,12 +243,6 @@ public class Dolphin implements MainWindow {
             Project.setBoolean(GUIConst.PVT_RELAY_IS_RUNNING, false);
         }
         
-//        // PHR
-//        PHRProxy phr = new PHRProxy();
-//        phr.setContext(this);
-//        phr.start();
-//        getProviders().put("PHRProxy", phr);
-        
     }
 
     /**

@@ -13,14 +13,6 @@
     </parent>
     <artifactId>opendolphin-server</artifactId>
     <packaging>war</packaging>
-    
-    <repositories>
-        <repository>
-            <id>jboss</id>
-            <name>JBoss Repository</name>
-            <url>http://repository.jboss.org/nexus/content/groups/public-jboss/</url>
-        </repository>
-    </repositories>  
 
     <dependencies>
         <dependency>
@@ -29,20 +21,9 @@
         </dependency>
         <dependency>
             <groupId>javax</groupId>
-            <artifactId>javaee-web-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.velocity</groupId>
-            <artifactId>velocity</artifactId>
-            <version>1.7</version>
         </dependency>
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
@@ -56,58 +37,35 @@
             <version>3.0.10.Final</version>
         </dependency>
         <dependency>
-            <groupId>jdom</groupId>
-            <artifactId>jdom</artifactId>
-            <version>1.1</version>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity-engine-core</artifactId>
+            <version>2.0</version>
         </dependency>
         <dependency>
-            <groupId>org.jboss.ejb3</groupId>
-            <artifactId>jboss-ejb3-ext-api</artifactId>
-            <version>2.1.0</version>
+            <groupId>org.jdom</groupId>
+            <artifactId>jdom2</artifactId>
+            <version>2.0.6</version>
         </dependency>
         <dependency>  
             <groupId>org.glassfish</groupId> 
             <artifactId>javax.json</artifactId> 
-            <version>1.0.4</version> 
-            <type>jar</type>
+            <version>1.1.2</version> 
         </dependency>
         <dependency>
             <groupId>com.googlecode.jsontoken</groupId>
             <artifactId>jsontoken</artifactId>
             <version>1.1</version>
         </dependency>
-        <!--
         <dependency>
-            <groupId>com.lowagie</groupId>
-            <artifactId>itext</artifactId>
-            <version>2.0.8</version>
-        </dependency>
-        <dependency>
-            <groupId>opendolphin</groupId>
-            <artifactId>itext-font</artifactId>
-            <version>1.0</version>
-        </dependency>
-        -->
-        <dependency>
-            <groupId>postgresql</groupId>
+            <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
-            <version>9.2-1002.jdbc4</version>
+            <version>42.2.2</version>
         </dependency>
-         <dependency>
+        <dependency>
             <groupId>com.plivo</groupId>
             <artifactId>plivo-java</artifactId>
-            <version>3.0.6</version>
+            <version>3.0.9</version>
         </dependency>
-        <!-- dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver</artifactId>
-            <version>3.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.5</version>
-        </dependency -->
     </dependencies>
     <version>2.7.0</version>
     <build>
@@ -115,22 +73,11 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
+                <version>3.7.0</version>
                 <configuration>
                     <showDeprecation>true</showDeprecation>
                     <source>1.8</source>
                     <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.wildfly.plugins</groupId>
-                <artifactId>wildfly-maven-plugin</artifactId>
-                <version>1.0.2.Final</version>
-                <configuration>
-                    <hostname>10.132.102.196</hostname>
-                    <port>9990</port>
-                    <username>lsc-wild-admin</username>
-                    <password>silk8250</password>
                 </configuration>
             </plugin>
         </plugins>

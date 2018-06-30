@@ -16,9 +16,9 @@ import open.dolphin.infomodel.DocumentModel;
 import open.dolphin.infomodel.IInfoModel;
 import open.dolphin.infomodel.ModuleModel;
 import open.dolphin.infomodel.ProgressCourse;
-import org.jdom.Document;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.Document;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 /**
  * KarteRenderer_2
@@ -221,7 +221,7 @@ public class KarteRenderer_2 {
         try {
             StringReader sr = new StringReader(xml);
             Document doc = docBuilder.build(new BufferedReader(sr));
-            org.jdom.Element root = (org.jdom.Element) doc.getRootElement();
+            org.jdom2.Element root = (org.jdom2.Element) doc.getRootElement();
             
             writeChildren(root);
         }
@@ -237,7 +237,7 @@ public class KarteRenderer_2 {
      * 子要素をパースする。
      * @param current 要素
      */
-    private void writeChildren(org.jdom.Element current) {
+    private void writeChildren(org.jdom2.Element current) {
         
         int eType = -1;
         String eName = current.getName();
@@ -285,7 +285,7 @@ public class KarteRenderer_2 {
             Iterator iterator = children.iterator();
             
             while (iterator.hasNext()) {
-                org.jdom.Element child = (org.jdom.Element) iterator.next();
+                org.jdom2.Element child = (org.jdom2.Element) iterator.next();
                 writeChildren(child);
             }
         }
@@ -486,7 +486,7 @@ public class KarteRenderer_2 {
     private void endComponent() {
     }
     
-    private void startIcon(org.jdom.Element current) {
+    private void startIcon(org.jdom2.Element current) {
         
         String name = current.getChildTextTrim("name");
         

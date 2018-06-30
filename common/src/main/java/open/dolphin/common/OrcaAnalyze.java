@@ -6,7 +6,7 @@
 
 package open.dolphin.common;
 
-import com.sun.org.apache.xpath.internal.XPathAPI;
+import org.apache.xpath.XPathAPI;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.logging.Level;

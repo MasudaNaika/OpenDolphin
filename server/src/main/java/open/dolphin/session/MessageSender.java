@@ -1,24 +1,24 @@
 package open.dolphin.session;
 
-import java.io.*;
-import java.util.Collection;
-import java.util.Properties;
-import java.util.logging.Logger;
-import javax.ejb.ActivationConfigProperty;
-import javax.ejb.MessageDriven;
-import javax.inject.Inject;
+//import java.io.*;
+//import java.util.Collection;
+//import java.util.Properties;
+//import java.util.logging.Logger;
+//import javax.ejb.ActivationConfigProperty;
+//import javax.ejb.MessageDriven;
+//import javax.inject.Inject;
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import javax.jms.ObjectMessage;
-import open.dolphin.infomodel.DiagnosisSendWrapper;
-import open.dolphin.infomodel.DocumentModel;
-import open.dolphin.infomodel.HealthInsuranceModel;
-import open.dolphin.infomodel.PatientVisitModel;
-import open.dolphin.mbean.PVTBuilder;
-import open.dolphin.msg.ClaimSender;
-import open.dolphin.msg.DiagnosisSender;
-import open.dolphin.msg.OidSender;
-import org.jboss.ejb3.annotation.ResourceAdapter;
+//import javax.jms.ObjectMessage;
+//import open.dolphin.infomodel.DiagnosisSendWrapper;
+//import open.dolphin.infomodel.DocumentModel;
+//import open.dolphin.infomodel.HealthInsuranceModel;
+//import open.dolphin.infomodel.PatientVisitModel;
+//import open.dolphin.mbean.PVTBuilder;
+//import open.dolphin.msg.ClaimSender;
+//import open.dolphin.msg.DiagnosisSender;
+//import open.dolphin.msg.OidSender;
+//import org.jboss.ejb3.annotation.ResourceAdapter;
 
 //s.oh^ 2014/02/21 Claim送信方法の変更
 //@MessageDriven(activationConfig = {
