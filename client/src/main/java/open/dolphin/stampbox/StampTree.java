@@ -3,7 +3,6 @@ package open.dolphin.stampbox;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -1410,26 +1409,22 @@ public class StampTree extends JTree implements TreeModelListener {
     @Override
     protected void paintComponent(Graphics g) {
 
-        Insets insets = getInsets();
-        int x = insets.left;
-        int y = insets.top;
-        int width = getWidth() - insets.left - insets.right;
-        int height = getHeight() - insets.top - insets.bottom;
+        // Paint zebra background stripes
+        Rectangle r = g.getClipBounds();
+        int y = getInsets().top;
+        int y1 = r.y + r.height;
         int numRows = getRowCount();
-        Rectangle visibleRect = getVisibleRect();
-        Rectangle rowRect = new Rectangle();
 
-        for (int row = 0; row < numRows || y < height; ++row) {
-            int rowH = row < numRows
+        for (int row = 0; y < y1; ++row) {
+            int h = row < numRows
                     ? getRowBounds(row).height
                     : getRowHeight();
-            rowH = Math.min(rowH, height - y);
-            rowRect.setBounds(x, y, width, rowH);
-            if (isPaintingForPrint() || rowRect.intersects(visibleRect)) {
+            // paint background when row rect intersects clipBounds
+            if (y + h - 1 >= r.y) {
                 g.setColor(ROW_COLORS[row & 1]);
-                g.fillRect(x, y, width, rowH);
+                g.fillRect(r.x, y, r.width, h);
             }
-            y += rowH;
+            y += h;
         }
 
         // Paint component

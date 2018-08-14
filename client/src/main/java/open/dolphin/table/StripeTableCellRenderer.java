@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Insets;
 import java.awt.Rectangle;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
@@ -83,26 +82,18 @@ public class StripeTableCellRenderer extends DefaultTableCellRenderer {
         public void paint(Graphics g, JComponent c) {
 
             // Paint zebra background stripes
-            Insets insets = c.getInsets();
-            int x = insets.left;
-            int y = insets.top;
-            int width = c.getWidth() - insets.left - insets.right;
-            int height = c.getHeight() - insets.top - insets.bottom;
-            int numRows = table.getRowCount();
-            Rectangle visibleRect = c.getVisibleRect();
-            Rectangle rowRect = new Rectangle();
+            Rectangle r = g.getClipBounds();
+            int y = c.getInsets().top;
+            int y1 = r.y + r.height;
 
-            for (int row = 0; row < numRows || y < height; ++row) {
-                int rowHeight = row < numRows
-                        ? table.getRowHeight(row)
-                        : table.getRowHeight();
-                rowHeight = Math.min(rowHeight, height - y);
-                rowRect.setBounds(x, y, width, rowHeight);
-                if (c.isPaintingForPrint() || rowRect.intersects(visibleRect)) {
+            for (int row = 0; y < y1; ++row) {
+                int h = table.getRowHeight(row);
+                // paint background when row rect intersects clipBounds
+                if (y + h - 1 >= r.y) {
                     g.setColor(ROW_COLORS[row & 1]);
-                    g.fillRect(x, y, width, rowHeight);
+                    g.fillRect(r.x, y, r.width, h);
                 }
-                y += rowHeight;
+                y += h;
             }
 
             super.paint(g, c);
