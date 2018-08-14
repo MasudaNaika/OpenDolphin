@@ -15,8 +15,8 @@ import java.util.List;
 import open.dolphin.client.ClientContext;
 import open.dolphin.infomodel.*;
 import open.dolphin.project.Project;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
+import org.jdom2.JDOMException;
+import org.jdom2.input.SAXBuilder;
 
 /**
  * PDFKarteMaker.java
@@ -371,8 +371,8 @@ public class KartePDFMaker extends AbstractPDFMaker {
 
             try {
                 StringReader sr = new StringReader(xml);
-                org.jdom.Document doc = docBuilder.build(new BufferedReader(sr));
-                org.jdom.Element root = doc.getRootElement();
+                org.jdom2.Document doc = docBuilder.build(new BufferedReader(sr));
+                org.jdom2.Element root = doc.getRootElement();
                 writeChildren(root);
             } catch (JDOMException e) {
                 e.printStackTrace(System.err);
@@ -382,7 +382,7 @@ public class KartePDFMaker extends AbstractPDFMaker {
             return cell;
         }
 
-        private void writeChildren(org.jdom.Element current) {
+        private void writeChildren(org.jdom2.Element current) {
 
             int eType = -1;
             String eName = current.getName();
@@ -425,7 +425,7 @@ public class KartePDFMaker extends AbstractPDFMaker {
                 Iterator iterator = children.iterator();
 
                 while (iterator.hasNext()) {
-                    org.jdom.Element child = (org.jdom.Element) iterator.next();
+                    org.jdom2.Element child = (org.jdom2.Element) iterator.next();
                     writeChildren(child);
                 }
             }
@@ -578,7 +578,7 @@ public class KartePDFMaker extends AbstractPDFMaker {
         private void endProgressCourse() {
         }
 
-        private void startIcon(org.jdom.Element current) {
+        private void startIcon(org.jdom2.Element current) {
         }
 
         private void endIcon() {

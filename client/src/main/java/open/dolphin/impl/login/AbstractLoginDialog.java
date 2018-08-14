@@ -172,6 +172,9 @@ public abstract class AbstractLoginDialog implements ILoginDialog {
         int top = (screen.height - height) / n;
         dialog.setLocation(left, top);
         dialog.setVisible(true);
+
+        dialog.toFront();
+
     }
 
     /**

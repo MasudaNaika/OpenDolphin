@@ -93,7 +93,7 @@ public final class ClientContextStub {
             //----------------------------------------
             // Inits Velocity with custom log handler
             //----------------------------------------
-            Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, new CustomVelocityLogger());
+            Velocity.setProperty(Velocity.RUNTIME_LOG_INSTANCE, new CustomVelocityLogger());
             Velocity.init();
 
             //------------------------------
