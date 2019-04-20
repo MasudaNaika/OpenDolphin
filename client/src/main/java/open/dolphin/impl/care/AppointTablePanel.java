@@ -40,6 +40,7 @@ import open.dolphin.infomodel.ModelUtils;
 import open.dolphin.project.Project;
 import open.dolphin.table.ListTableModel;
 import open.dolphin.table.StripeTableCellRenderer;
+import open.dolphin.util.DolphinUtils;
 import open.dolphin.util.MMLDate;
 
 /**
@@ -126,7 +127,7 @@ public class AppointTablePanel extends JPanel implements PropertyChangeListener 
         //-----------------------------------------------
         // Copy 機能を実装する
         //-----------------------------------------------
-        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx());
         String actionText = ClientContext.getMyBundle(AppointTablePanel.class).getString("actionText.copy");
         final AbstractAction copyAction = new AbstractAction(actionText) {
 

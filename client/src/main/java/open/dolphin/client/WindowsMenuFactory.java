@@ -3,6 +3,7 @@ package open.dolphin.client;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -10,6 +11,7 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 import open.dolphin.helper.MenuSupport;
 import open.dolphin.project.Project;
+import open.dolphin.util.DolphinUtils;
 
 /**
  * Menu Factory for Mac. 
@@ -1415,12 +1417,12 @@ public class WindowsMenuFactory extends AbstractMenuFactory {
     }
     
     private void setAccelerator(JMenuItem item, int key) {
-        item.setAccelerator(KeyStroke.getKeyStroke(key, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+        item.setAccelerator(KeyStroke.getKeyStroke(key, DolphinUtils.getMenuShortcutKeyMaskEx()));
     }
     
     private void setAccelerator(JMenuItem item, int key, boolean shiftMask) {
-        item.setAccelerator(
-                        KeyStroke.getKeyStroke(key, (java.awt.event.InputEvent.SHIFT_MASK | (Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()))));
+        item.setAccelerator(KeyStroke.getKeyStroke(key, 
+                InputEvent.SHIFT_DOWN_MASK | DolphinUtils.getMenuShortcutKeyMaskEx()));
     }
     
     private void outputOperLogOper(int level, String... ms) {

@@ -79,7 +79,7 @@ public class SystemServiceBean {
 
         // シーケンサから次の施設番号を得る
         java.math.BigInteger nextId = (java.math.BigInteger)em.createNativeQuery(QUERY_NEXT_FID).getSingleResult();
-        Long nextFnum = new Long(nextId.longValue());
+        Long nextFnum = nextId.longValue();
 
         // 施設OIDを生成する  base.next
         StringBuilder sb = new StringBuilder();

@@ -22,6 +22,7 @@ import open.dolphin.infomodel.IInfoModel;
 import open.dolphin.project.Project;
 import open.dolphin.table.ListTableModel;
 import open.dolphin.table.StripeTableCellRenderer;
+import open.dolphin.util.DolphinUtils;
 
 /**
  * 文書履歴を取得し、表示するクラス。
@@ -391,7 +392,7 @@ public class DocumentHistory {
         String deleteText = bundle.getString("actionText.delete");
         String duplicateText = bundle.getString("actionText.dupricate");
         
-        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx());
         final AbstractAction copyAction = new AbstractAction(copyText) {
 
             @Override

@@ -704,7 +704,7 @@ public class PVTServiceBean {
      * @return 削除件数
      */
     public int removePvt(long id) {
-        PatientVisitModel exist = (PatientVisitModel) em.find(PatientVisitModel.class, new Long(id));
+        PatientVisitModel exist = (PatientVisitModel) em.find(PatientVisitModel.class, id);
         em.remove(exist);
         return 1;
     }
@@ -761,7 +761,7 @@ public class PVTServiceBean {
      */
     
     public int updateMemo(long pk, String memo) {
-        PatientVisitModel exist = (PatientVisitModel) em.find(PatientVisitModel.class, new Long(pk));
+        PatientVisitModel exist = (PatientVisitModel) em.find(PatientVisitModel.class, pk);
         exist.setMemo(memo);
         return 1;
     }

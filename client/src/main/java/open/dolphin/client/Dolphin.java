@@ -10,6 +10,7 @@ import java.awt.print.PageFormat;
 import java.awt.print.PrinterJob;
 import java.beans.PropertyChangeEvent;
 import java.io.*;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
@@ -60,6 +61,7 @@ import open.dolphin.project.StubFactory;
 import open.dolphin.relay.PVTRelayProxy;
 import open.dolphin.server.PVTServer;
 import open.dolphin.stampbox.StampBoxPlugin;
+import open.dolphin.util.DolphinUtils;
 
 /**
  * アプリケーションのメインウインドウクラス。
@@ -530,31 +532,65 @@ public class Dolphin implements MainWindow {
         // Mac Application Menu
         //------------------------------
         if (ClientContext.isMac()) {
-        
+            enableMacApplicationMenu();
+        }
+        windowSupport.getFrame().setVisible(true);
+    }
+    
+    // Mac Application Menu
+    private void enableMacApplicationMenu() {
+
+        if (DolphinUtils.isJava8()) {
+
+            // 1.7, 1.8
             com.apple.eawt.Application fApplication = com.apple.eawt.Application.getApplication();
-        
+
             // About
             fApplication.setAboutHandler((com.apple.eawt.AppEvent.AboutEvent ae) -> {
                 showAbout();
             });
-        
+
             // Preference
             fApplication.setPreferencesHandler((com.apple.eawt.AppEvent.PreferencesEvent pe) -> {
                 doPreference();
             });
-        
+
             // Quit
             fApplication.setQuitHandler((com.apple.eawt.AppEvent.QuitEvent qe, com.apple.eawt.QuitResponse qr) -> {
                 processExit();
             });
-            
-            // Dock Icon
-            ImageIcon icon = ClientContext.getImageIcon("OpenDolphin_icon.png");
-            fApplication.setDockIconImage(icon.getImage());
-        }
-        windowSupport.getFrame().setVisible(true);
-    }
 
+            // Dock Icon
+            ImageIcon icon = ClientContext.getImageIcon("OpenDolphin-m.png");
+            fApplication.setDockIconImage(icon.getImage());
+
+        } else {
+
+            Desktop desktop = Desktop.getDesktop();
+
+            // About
+            desktop.setAboutHandler((java.awt.desktop.AboutEvent ae) -> {
+                showAbout();
+            });
+
+            // Preference
+            desktop.setPreferencesHandler((java.awt.desktop.PreferencesEvent pe) -> {
+                doPreference();
+            });
+
+            // Quit
+            desktop.setQuitHandler((java.awt.desktop.QuitEvent qe, java.awt.desktop.QuitResponse qr) -> {
+                processExit();
+            });
+
+            // Dock Icon
+            ImageIcon icon = ClientContext.getImageIcon("OpenDolphin-m.png");
+            Taskbar.getTaskbar().setIconImage(icon.getImage());
+
+        }
+
+    }
+    
     @Override
     public JLabel getStatusLabel() {
         return view.getStatusLbl();
@@ -1294,7 +1330,12 @@ public class Dolphin implements MainWindow {
      * 施設情報を編集する。管理者メニュー。
      */
     public void editFacilityInfo() {
-
+        
+        // 脆弱性対策、念のため
+        if (!Project.isAdmin()) {
+            return;
+        }
+        
         PluginLoader<AddUser> loader = PluginLoader.load(AddUser.class);
         Iterator<AddUser> iter = loader.iterator();
         if (iter.hasNext()) {
@@ -1308,7 +1349,12 @@ public class Dolphin implements MainWindow {
      * ユーザ登録を行う。管理者メニュー。
      */
     public void addUser() {
-
+        
+        // 脆弱性対策、念のため
+        if (!Project.isAdmin()) {
+            return;
+        }
+        
         PluginLoader<AddUser> loader = PluginLoader.load(AddUser.class);
         Iterator<AddUser> iter = loader.iterator();
         if (iter.hasNext()) {
@@ -1611,11 +1657,12 @@ public class Dolphin implements MainWindow {
     public void invokeToolPlugin(String pluginClass) {
 
         try {
-            MainTool tool = (MainTool) Class.forName(pluginClass).newInstance();
+            MainTool tool = (MainTool) Class.forName(pluginClass).getDeclaredConstructor().newInstance();
             tool.setContext(this);
             tool.start();
 
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException 
+                | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace(System.err);
         }
     }

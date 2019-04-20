@@ -374,7 +374,8 @@ public final class PlistConverter {
      */
     private static void reflectConvert(IInfoModelConverter target, StringWriter writer)
             throws IOException, IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException, MessagingException, ClassNotFoundException, InstantiationException {
+            InvocationTargetException, MessagingException, ClassNotFoundException, 
+            InstantiationException, NoSuchMethodException {
 
         // class名から key を生成する
         // open.dolphin.infomodel.PatientModelConverter -> PatientModel -> patientModel
@@ -489,7 +490,8 @@ public final class PlistConverter {
      * @throws IllegalAccessException 
      */
     private static IInfoModelConverter createConverter(IInfoModel model)
-            throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+            throws ClassNotFoundException, InstantiationException, IllegalAccessException, 
+            NoSuchMethodException, IllegalArgumentException, InvocationTargetException {
 
         // open.dolphin.infomodel.PatientModel ->
         // open.dolphin.converter.PatientModelConverter
@@ -503,7 +505,8 @@ public final class PlistConverter {
         sb.append(CONVERTER_EXT);
         String converterName = sb.toString();
 
-        IInfoModelConverter ret = (IInfoModelConverter)Class.forName(converterName).newInstance();
+        IInfoModelConverter ret = (IInfoModelConverter)Class.forName(converterName)
+                .getDeclaredConstructor().newInstance();
 
         // ConverterへModelをセットする
         ret.setModel(model);
@@ -525,7 +528,8 @@ public final class PlistConverter {
      */
     private static String convertAsList(List list)
             throws IOException, ClassNotFoundException, InstantiationException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException, MessagingException {
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, 
+            MessagingException, NoSuchMethodException {
         
         StringWriter writer = new StringWriter();
         // <array>
@@ -580,7 +584,8 @@ public final class PlistConverter {
      */
     private static String convertAsRoot(IInfoModel target)
             throws IOException, ClassNotFoundException, InstantiationException,
-            IllegalAccessException, IllegalArgumentException, InvocationTargetException, MessagingException {
+            IllegalAccessException, IllegalArgumentException, InvocationTargetException, 
+            MessagingException, NoSuchMethodException {
         
         StringWriter writer = new StringWriter();
 

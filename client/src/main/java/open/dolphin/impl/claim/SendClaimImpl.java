@@ -13,7 +13,6 @@ import open.dolphin.client.ClaimMessageListener;
 import open.dolphin.client.ClientContext;
 import open.dolphin.client.MainWindow;
 import open.dolphin.project.Project;
-import org.apache.log4j.Logger;
 
 
 /**

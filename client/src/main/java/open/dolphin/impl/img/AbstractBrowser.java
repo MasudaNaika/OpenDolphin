@@ -30,7 +30,6 @@ import open.dolphin.client.ClientContext;
 import open.dolphin.client.ImageEntry;
 import open.dolphin.helper.ImageHelper;
 import open.dolphin.infomodel.PatientModel;
-import org.apache.log4j.Level;
 
 /**
  *

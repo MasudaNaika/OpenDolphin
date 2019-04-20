@@ -138,7 +138,7 @@ public final class CareMapDocument extends AbstractChartDocument {
                 origin--;
                 SimpleCalendarPanel save = c0;
                 SimpleCalendarPanel test = (SimpleCalendarPanel) cPool
-                        .get(new Integer(origin - 1));
+                        .get(origin - 1);
                 
                 if (test != null) {
                     // Pool されていた場合
@@ -186,7 +186,7 @@ public final class CareMapDocument extends AbstractChartDocument {
                 SimpleCalendarPanel.SimpleCalendarPool pool = SimpleCalendarPanel.SimpleCalendarPool.getInstance();
                 origin++;
                 SimpleCalendarPanel save = c2;
-                SimpleCalendarPanel test = (SimpleCalendarPanel) cPool.get(new Integer(origin + 1));
+                SimpleCalendarPanel test = (SimpleCalendarPanel) cPool.get(origin + 1);
                 
                 if (test != null) {
                     // Pool されていた場合

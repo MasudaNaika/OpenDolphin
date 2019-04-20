@@ -1,6 +1,7 @@
 package open.dolphin.impl.schema;
 
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import open.dolphin.client.SchemaEditor;
 import open.dolphin.infomodel.SchemaModel;
 import open.dolphin.project.Project;
@@ -56,8 +57,9 @@ public class SchemaEditorProxy implements SchemaEditor {
     
     private Object create(String clsName) {
         try {
-            return Class.forName(clsName).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
+            return Class.forName(clsName).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException 
+                | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace(System.err);
         }
         return null;

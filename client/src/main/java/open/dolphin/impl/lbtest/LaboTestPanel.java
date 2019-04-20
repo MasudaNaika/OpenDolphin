@@ -20,6 +20,7 @@ import open.dolphin.delegater.LaboDelegater;
 import open.dolphin.infomodel.*;
 import open.dolphin.project.Project;
 import open.dolphin.table.ListTableModel;
+import open.dolphin.util.DolphinUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -27,7 +28,7 @@ import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.IntervalMarker;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.ui.Layer;
+import org.jfree.chart.ui.Layer;
 
 /**
  * LaboTestBean
@@ -360,7 +361,7 @@ public class LaboTestPanel extends AbstractChartDocument {
         //-----------------------------------------------
         // Copy 機能を実装する
         //-----------------------------------------------
-        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx());
         String actionText = bundle.getString("actionText.copy");
         final AbstractAction copyAction = new AbstractAction(actionText) {
 

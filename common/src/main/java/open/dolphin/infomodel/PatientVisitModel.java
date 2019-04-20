@@ -238,7 +238,7 @@ public class PatientVisitModel extends InfoModel implements java.io.Serializable
     }
     
     public Integer getStateInteger() {
-        return new Integer(status);
+        return status;
     }
     
     public String getPatientId() {

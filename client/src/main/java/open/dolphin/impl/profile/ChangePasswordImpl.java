@@ -161,6 +161,9 @@ public class ChangePasswordImpl extends AbstractMainTool implements ChangeProfil
             uid.addFocusListener(AutoRomanListener.getInstance());
             uid.setToolTipText(pattern);
             
+            // 脆弱性対策
+            uid.setEditable(false);
+            
             // パスワードフィールドを設定する
             userPassword1 = createPassField(10, null, null, null);
             userPassword1.addActionListener((ActionEvent e) -> {
@@ -215,8 +218,9 @@ public class ChangePasswordImpl extends AbstractMainTool implements ChangeProfil
             // 医療資格
             licenses = ClientContext.getLicenseModel();
             licenseCombo = new JComboBox(licenses);
-            boolean readOnly = Project.isReadOnly();    // == dc
-            licenseCombo.setEnabled(!readOnly);
+//            boolean readOnly = Project.isReadOnly();    // == dc
+//            licenseCombo.setEnabled(!readOnly);
+            licenseCombo.setEnabled(Project.isAdmin());
             //licenseCombo.setEnabled(true);
             
             // 診療科

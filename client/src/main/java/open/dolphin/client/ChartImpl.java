@@ -6,6 +6,7 @@ import java.beans.EventHandler;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -19,8 +20,8 @@ import java.util.logging.Level;
 import javax.swing.*;
 import javax.swing.Timer;
 import javax.swing.event.*;
-import net.sf.jooreports.templates.DocumentTemplate;
-import net.sf.jooreports.templates.DocumentTemplateFactory;
+import org.jodreports.templates.DocumentTemplate;
+import org.jodreports.templates.DocumentTemplateFactory;
 import open.dolphin.delegater.DocumentDelegater;
 import open.dolphin.helper.PdfOfficeIconRenderer;
 import open.dolphin.helper.SimpleWorker;
@@ -1654,7 +1655,7 @@ public class ChartImpl extends AbstractMainTool implements Chart, IInfoModel {
 
         try {
             NChartDocument doc = (NChartDocument) Class.forName(
-                    pluginClass).newInstance();
+                    pluginClass).getDeclaredConstructor().newInstance();
             
             if (doc instanceof KarteEditor) {
                 
@@ -1698,7 +1699,8 @@ public class ChartImpl extends AbstractMainTool implements Chart, IInfoModel {
                 addChartDocument(doc, doc.getTitle());
             }
 
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException 
+                | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException e) {
             logger.finer(e.getMessage());
         }
     }

@@ -21,6 +21,7 @@ import open.dolphin.infomodel.PVTPublicInsuranceItemModel;
 import open.dolphin.infomodel.PatientModel;
 import open.dolphin.table.StripeTableCellRenderer;
 import open.dolphin.util.AgeCalculater;
+import open.dolphin.util.DolphinUtils;
 
 /**
  * Documet to show Patient and Health Insurance info.
@@ -206,7 +207,7 @@ public class PatientInfoDocument extends AbstractChartDocument {
         //-----------------------------------------------
         // Copy 機能を実装する
         //-----------------------------------------------
-        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx());
         String actionText = ClientContext.getMyBundle(PatientInfoDocument.class).getString("actionText.copy");
         final AbstractAction copyAction = new AbstractAction(actionText) {
 

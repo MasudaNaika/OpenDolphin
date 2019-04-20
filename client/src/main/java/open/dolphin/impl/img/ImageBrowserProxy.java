@@ -1,6 +1,7 @@
 package open.dolphin.impl.img;
 
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import open.dolphin.client.Chart;
@@ -112,8 +113,9 @@ public class ImageBrowserProxy implements ChartDocument {
     
     private Object create(String clsName) {
         try {
-            return Class.forName(clsName).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
+            return Class.forName(clsName).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException 
+                | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace(System.err);
         }
         return null;

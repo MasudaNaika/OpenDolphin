@@ -34,6 +34,7 @@ import open.dolphin.letter.KartePDFImpl2;
 import open.dolphin.plugin.PluginLoader;
 import open.dolphin.project.Project;
 import open.dolphin.util.BeanUtils;
+import open.dolphin.util.DolphinUtils;
 import open.dolphin.util.ZenkakuUtils;
 
 /**
@@ -198,7 +199,7 @@ public class KarteEditor extends AbstractChartDocument implements IInfoModel, NC
         try {
             JTextPane pane = soaPane.getTextPane();
             int pos = pane.getDocument().getLength();
-            Rectangle r = pane.modelToView(pos);
+            Rectangle r = DolphinUtils.modelToView(pane, pos);
             int hsoa = r.y;
 
             if (pPane == null) {
@@ -207,7 +208,7 @@ public class KarteEditor extends AbstractChartDocument implements IInfoModel, NC
 
             pane = pPane.getTextPane();
             pos = pane.getDocument().getLength();
-            r = pane.modelToView(pos);
+            r = DolphinUtils.modelToView(pane, pos);
             int hp = r.y;
 
             return Math.max(hsoa, hp);

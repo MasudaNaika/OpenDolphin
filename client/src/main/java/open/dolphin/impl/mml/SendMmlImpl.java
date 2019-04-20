@@ -8,13 +8,11 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import open.dolphin.client.ClientContext;
 import open.dolphin.client.MainWindow;
 import open.dolphin.client.MmlMessageEvent;
 import open.dolphin.client.MmlMessageListener;
 import open.dolphin.infomodel.SchemaModel;
 import open.dolphin.project.Project;
-import org.apache.log4j.Logger;
 
 /**
  * MML 送信サービス。

@@ -13,6 +13,7 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import open.dolphin.infomodel.ModuleInfoBean;
 import open.dolphin.project.Project;
+import open.dolphin.util.DolphinUtils;
 
 /**
  * KartePane の抽象コードヘルパークラス。
@@ -180,7 +181,7 @@ public abstract class AbstractCodeHelper {
         
         try {
             int pos = textPane.getCaretPosition();
-            Rectangle r = textPane.modelToView(pos);
+            Rectangle r = DolphinUtils.modelToView(textPane, pos);
             popup.show (textPane, r.x, r.y);
 
         } catch (Exception e) {

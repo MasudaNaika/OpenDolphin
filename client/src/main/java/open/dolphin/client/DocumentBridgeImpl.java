@@ -3,6 +3,7 @@ package open.dolphin.client;
 import java.awt.BorderLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.JScrollPane;
 import open.dolphin.infomodel.DocInfoModel;
 import open.dolphin.infomodel.IInfoModel;
@@ -91,7 +92,9 @@ public class DocumentBridgeImpl extends AbstractChartDocument
                     curViwer = createLetterModuleViewer(handleClass);
                     curViwer.setContext(getContext());
                     curViwer.start();
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (InstantiationException | IllegalAccessException | ClassNotFoundException
+                        | NoSuchMethodException | SecurityException | IllegalArgumentException 
+                        | InvocationTargetException e) {
                     e.printStackTrace(System.err);
                 }
             }
@@ -165,13 +168,15 @@ public class DocumentBridgeImpl extends AbstractChartDocument
         return new KarteDocumentViewer();
     }
 
-    private DocumentViewer createLetterModuleViewer(String handleClass)
-            throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+    private DocumentViewer createLetterModuleViewer(String handleClass) throws
+            InstantiationException, IllegalAccessException, ClassNotFoundException,
+            NoSuchMethodException, SecurityException, IllegalArgumentException,
+            InvocationTargetException {
         if (curViwer != null) {
             curViwer = null;
         }
         DocumentViewer doc = (DocumentViewer) Class.forName(
-                    handleClass).newInstance();
+                handleClass).getDeclaredConstructor().newInstance();
         return doc;
     }
 }

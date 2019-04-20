@@ -27,6 +27,7 @@ import open.dolphin.infomodel.*;
 import open.dolphin.project.Project;
 import open.dolphin.table.*;
 import open.dolphin.util.AgeCalculator;
+import open.dolphin.util.DolphinUtils;
 import org.apache.commons.lang.time.DurationFormatUtils;
 
 /**
@@ -615,7 +616,7 @@ public class WatingListImpl extends AbstractMainComponent implements PropertyCha
         //-----------------------------------------------
         // Copy 機能を実装する
         //-----------------------------------------------
-        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx());
         copyAction = new AbstractAction("コピー") {
 
             @Override

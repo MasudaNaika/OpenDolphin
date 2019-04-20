@@ -4,6 +4,11 @@ import org.masudanaika.modanna.ui.ModannaTabbedPaneUI;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.text.DateFormat;
 import java.text.MessageFormat;
 import java.util.*;
@@ -21,7 +26,8 @@ import open.dolphin.exception.DolphinException;
 import open.dolphin.infomodel.DepartmentModel;
 import open.dolphin.infomodel.LicenseModel;
 import open.dolphin.project.Project;
-import org.apache.log4j.BasicConfigurator;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
+import org.apache.logging.log4j.core.config.Configurator;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 
@@ -87,13 +93,32 @@ public final class ClientContextStub {
             //------------------------------
             // Configure Log4j properties
             //------------------------------
-            BasicConfigurator.configure();
-            org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.INFO);
+            String pathToSetting = createDirectory(pathToDolphin, "setting");
+            Path log4jxml = Paths.get(pathToSetting, "log4j2.xml");
+            if (!Files.exists(log4jxml)) {
+                java.util.List<String> lines = new ArrayList<>();
+                try (InputStreamReader isr = new InputStreamReader(getResourceAsStream("log4j2.xml"));
+                        BufferedReader reader = new BufferedReader(isr);) {
+
+                    for (String line = reader.readLine(); line != null; line = reader.readLine()) {
+                        if (line.contains("_pathToLogFolder")) {
+                            line = line.replace("_pathToLogFolder", getLogDirectory());
+                        }
+                        lines.add(line);
+                    }
+                }
+                Files.write(log4jxml, lines, StandardCharsets.UTF_8, StandardOpenOption.CREATE);
+            }
+            try (InputStream in = new BufferedInputStream(Files.newInputStream(log4jxml))) {
+                ConfigurationSource src = new ConfigurationSource(in);
+                Configurator.initialize(null, src);
+            }
             
             //----------------------------------------
             // Inits Velocity with custom log handler
             //----------------------------------------
-            Velocity.setProperty(Velocity.RUNTIME_LOG_INSTANCE, new CustomVelocityLogger());
+//            Velocity.setProperty(Velocity.RUNTIME_LOG_INSTANCE, new CustomVelocityLogger());
+            Velocity.setProperty("runtime.log", getLogDirectory() + File.separator + "velocity.log");
             Velocity.init();
 
             //------------------------------
@@ -115,7 +140,7 @@ public final class ClientContextStub {
             logger.log(java.util.logging.Level.INFO, "country = {0}", Locale.getDefault().getCountry());
             logger.log(java.util.logging.Level.INFO, "language = {0}", Locale.getDefault().getLanguage());
 
-        } catch (DolphinException e) {
+        } catch (IOException | DolphinException e) {
             Logger.getLogger(this.getClass().getName()).severe(e.getMessage());
             System.exit(1);
         }
@@ -531,14 +556,19 @@ public final class ClientContextStub {
                     UIManager.put("OptionPane.okButtonText", bundle.getString("okButtonText.mac"));
                 }
             }
-            // LAF
+            String lafName = Project.getString("lookAndFeel");
+            if ("com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel".equals(lafName)) {
+                lafName = "javax.swing.plaf.nimbus.NimbusLookAndFeel";
+                Project.setString("lookAndFeel", lafName);
+            } // LAF
             else if (isWin() || isLinux()) {
-                if (Project.getString("lookAndFeel")!=null) {
-                    UIManager.setLookAndFeel(Project.getString("lookAndFeel"));
-                }  else {
+                if (lafName != null) {
+                    UIManager.setLookAndFeel(lafName);
+                } else {
                     // Default=NimbusLookAndFeel
-                    String nimbusCls = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
-                    UIManager.setLookAndFeel(nimbusCls);
+                    lafName = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+                    UIManager.setLookAndFeel(lafName);
+                    Project.setString("lookAndFeel", lafName);
                 }
             }
 //masuda^ tweet

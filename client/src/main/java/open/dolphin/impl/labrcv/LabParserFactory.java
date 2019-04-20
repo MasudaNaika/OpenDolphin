@@ -1,5 +1,6 @@
 package open.dolphin.impl.labrcv;
 
+import java.lang.reflect.InvocationTargetException;
 import open.dolphin.client.LabResultParser;
 
 /**
@@ -27,10 +28,11 @@ public class LabParserFactory {
                 clsName = "open.dolphin.impl.labrcv.Dat2Parser";
             }
             
-            LabResultParser ret = (LabResultParser) Class.forName(clsName).newInstance();
+            LabResultParser ret = (LabResultParser) Class.forName(clsName).getDeclaredConstructor().newInstance();
             return ret;
             
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException 
+                | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace(System.err);
         }
         return null;

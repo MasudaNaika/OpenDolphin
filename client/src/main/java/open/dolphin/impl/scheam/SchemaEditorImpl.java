@@ -400,7 +400,7 @@ public class SchemaEditorImpl implements SchemaEditor {
             final int final_i = i;
             lineWidthBtn[i].addActionListener((ActionEvent e) -> {
                 float lw = lineWidthValue[final_i];
-                if ((e.getModifiers() & InputEvent.SHIFT_MASK) != 0) lw *= 2;
+                if ((e.getModifiers() & ActionEvent.SHIFT_MASK) != 0) lw *= 2;
                 properties.setLineWidth(lw);
                 widthSlider.setValue((int)(lw*10));
                 widthField.setText(String.format("%.2f", lw));

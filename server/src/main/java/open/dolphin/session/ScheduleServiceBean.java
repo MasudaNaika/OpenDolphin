@@ -421,7 +421,7 @@ public class ScheduleServiceBean {
     
     public int removePvt(long pvtPK, long ptPK, Date startDate) {
         // 受付咲くジョン
-        PatientVisitModel exist = (PatientVisitModel)em.find(PatientVisitModel.class, new Long(pvtPK));
+        PatientVisitModel exist = (PatientVisitModel)em.find(PatientVisitModel.class, pvtPK);
         em.remove(exist);
         
         // 患者のカルテを取得する

@@ -11,6 +11,7 @@ import javax.swing.text.BadLocationException;
 import open.dolphin.infomodel.IInfoModel;
 import open.dolphin.infomodel.ModelUtils;
 import open.dolphin.project.Project;
+import open.dolphin.util.DolphinUtils;
 
 /**
  * 2号カルテクラス。
@@ -30,12 +31,12 @@ public class KarteViewer2 extends KarteViewer {
         try {
             JTextPane pane = soaPane.getTextPane();
             int pos = pane.getDocument().getLength();
-            Rectangle r = pane.modelToView(pos);
+            Rectangle r = DolphinUtils.modelToView(pane, pos);
             int hsoa = r.y;
             
             pane = pPane.getTextPane();
             pos = pane.getDocument().getLength();
-            r = pane.modelToView(pos);
+            r = DolphinUtils.modelToView(pane, pos);
             int hp = r.y;
             
             return Math.max(hsoa, hp);

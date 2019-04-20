@@ -333,7 +333,7 @@ public class StampServiceBean {
         List<Long> ret = new ArrayList<Long>();
         for (SubscribedTreeModel model : addList) {
             em.persist(model);
-            ret.add(new Long(model.getId()));
+            ret.add(model.getId());
         }
         return ret;
     }

@@ -181,7 +181,7 @@ public abstract class AbstractPropertySheet {
             Class editorClass = descriptor.getPropertyEditorClass();
             
             if (editorClass != null) {           
-                editor = (PropertyEditor) editorClass.newInstance();
+                editor = (PropertyEditor) editorClass.getDeclaredConstructor().newInstance();
             }
             else {
                 editor = PropertyEditorManager.findEditor(descriptor.getPropertyType());
@@ -197,7 +197,8 @@ public abstract class AbstractPropertySheet {
             
             return editor;
         }
-        catch (InstantiationException | IllegalAccessException | InvocationTargetException exception) {
+        catch (InstantiationException | IllegalAccessException | InvocationTargetException
+                | NoSuchMethodException | SecurityException exception) {
             return null;
         }
     }
@@ -259,9 +260,9 @@ public abstract class AbstractPropertySheet {
             
             SpinnerEditorSupport spinnerEditor = (SpinnerEditorSupport)editor;
             SpinnerModel fetchModel = new SpinnerNumberModel((Integer)editor.getValue(), 
-                    new Integer(spinnerEditor.getMinValue()), 
-                    new Integer(spinnerEditor.getMaxValue()), 
-                    new Integer(spinnerEditor.getStepValue()));
+                    Integer.valueOf(spinnerEditor.getMinValue()), 
+                    Integer.valueOf(spinnerEditor.getMaxValue()), 
+                    Integer.valueOf(spinnerEditor.getStepValue()));
             JSpinner spinner = new JSpinner(fetchModel);
             spinner.setEditor(new JSpinner.NumberEditor(spinner, "#"));
             spinner.addChangeListener((ChangeEvent e) -> {

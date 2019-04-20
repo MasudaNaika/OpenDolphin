@@ -24,6 +24,7 @@ import open.dolphin.table.ListTableModel;
 import open.dolphin.table.ListTableSorter;
 import open.dolphin.table.StripeTableCellRenderer;
 import open.dolphin.util.AgeCalculator;
+import open.dolphin.util.DolphinUtils;
 
 /**
  * 患者検索PatientSearchPlugin
@@ -439,7 +440,7 @@ public class PatientScheduleImpl extends AbstractMainComponent {
         view.getTable().addMouseListener(new ContextListener());
 
         // Copy 機能を実装する
-        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx());
         java.util.ResourceBundle bundle = ClientContext.getMyBundle(PatientScheduleImpl.class);
         String actionText = bundle.getString("actionText.copy");
         copyAction = new AbstractAction(actionText) {

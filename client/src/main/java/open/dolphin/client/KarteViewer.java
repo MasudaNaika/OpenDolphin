@@ -21,6 +21,7 @@ import open.dolphin.infomodel.IInfoModel;
 import open.dolphin.infomodel.ModelUtils;
 import open.dolphin.letter.KartePDFImpl2;
 import open.dolphin.project.Project;
+import open.dolphin.util.DolphinUtils;
 
 /**
  * シングルドキュメントのビュワークラス。
@@ -109,7 +110,7 @@ public class KarteViewer extends AbstractChartDocument implements Comparable {
         try {
             JTextPane pane = soaPane.getTextPane();
             int pos = pane.getDocument().getLength();
-            Rectangle r = pane.modelToView(pos);
+            Rectangle r = DolphinUtils.modelToView(pane, pos);
             int hsoa = r.y;
             return hsoa;
             

@@ -825,10 +825,10 @@ public class EHTServiceBean {
     }
     public List<Long> addObservations(List<ObservationModel> observations) {
         if (observations != null && observations.size() > 0) {
-            List<Long> ret = new ArrayList<Long>(observations.size());
+            List<Long> ret = new ArrayList<>(observations.size());
             for (ObservationModel model : observations) {
                 em.persist(model);
-                ret.add(new Long(model.getId()));
+                ret.add(model.getId());
             }
             return ret;
         }

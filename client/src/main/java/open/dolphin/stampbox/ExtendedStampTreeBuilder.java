@@ -12,7 +12,7 @@ import open.dolphin.infomodel.StampModel;
 import open.dolphin.project.Project;
 import open.dolphin.util.GUIDGenerator;
 import open.dolphin.util.HexBytesTool;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
 
 /**
  * stampBytesも含めたStampTreeBuilder

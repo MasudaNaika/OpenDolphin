@@ -2,6 +2,7 @@ package open.dolphin.relay;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.lang.reflect.InvocationTargetException;
 import open.dolphin.project.Project;
 
 /**
@@ -42,8 +43,9 @@ public class PVTRelayProxy implements PropertyChangeListener {
     
     private Object create(String clsName) {
         try {
-            return Class.forName(clsName).newInstance();
-        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException ex) {
+            return Class.forName(clsName).getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException 
+                | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
             ex.printStackTrace(System.err);
         }
         return null;

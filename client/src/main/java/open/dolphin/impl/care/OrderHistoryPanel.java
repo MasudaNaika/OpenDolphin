@@ -19,6 +19,7 @@ import open.dolphin.client.ClientContext;
 import open.dolphin.infomodel.*;
 import open.dolphin.table.ListTableModel;
 import open.dolphin.table.StripeTableCellRenderer;
+import open.dolphin.util.DolphinUtils;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.exception.MethodInvocationException;
@@ -112,7 +113,7 @@ public final class OrderHistoryPanel extends JPanel implements PropertyChangeLis
         //-----------------------------------------------
         // Copy 機能を実装する
         //-----------------------------------------------
-        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx());
         String actionText = ClientContext.getMyBundle(OrderHistoryPanel.class).getString("actionText.copy");
         final AbstractAction copyAction = new AbstractAction(actionText) {
 

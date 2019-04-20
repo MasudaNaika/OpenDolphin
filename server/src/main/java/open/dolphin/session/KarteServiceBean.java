@@ -586,7 +586,7 @@ public class KarteServiceBean {
         //------------------------------------------------------------
         try {
             // PVT 更新  state==2 || state == 4
-            PatientVisitModel exist = (PatientVisitModel) em.find(PatientVisitModel.class, new Long(pvtPK));
+            PatientVisitModel exist = (PatientVisitModel) em.find(PatientVisitModel.class, pvtPK);
             exist.setState(state);
         } catch (Throwable e) {
             e.printStackTrace(System.err);
@@ -941,7 +941,7 @@ public class KarteServiceBean {
             
             for (RegisteredDiagnosisModel bean : addList) {
                 em.persist(bean);
-                ret.add(new Long(bean.getId()));
+                ret.add(bean.getId());
             }
         }
         
@@ -1025,7 +1025,7 @@ public class KarteServiceBean {
 
         for (RegisteredDiagnosisModel bean : addList) {
             em.persist(bean);
-            ret.add(new Long(bean.getId()));
+            ret.add(bean.getId());
         }
 
         return ret;
@@ -1122,7 +1122,7 @@ public class KarteServiceBean {
 
             for (ObservationModel model : observations) {
                 em.persist(model);
-                ret.add(new Long(model.getId()));
+                ret.add(model.getId());
             }
 
             return ret;

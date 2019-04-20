@@ -40,7 +40,7 @@ public class MDI {
         JInternalFrame child = new JInternalFrame(title, true, true, true, true);
         child.setSize(width, height);
         child.setLocation(x, y);
-        desktop.add(child, new Integer(childCount));
+        desktop.add(child, (Integer) childCount);
         childCount += 1;
         if(event != null) child.addInternalFrameListener(event.getListener());
         child.setVisible(true);

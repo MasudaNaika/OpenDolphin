@@ -11,6 +11,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
+import open.dolphin.util.DolphinUtils;
 
 /**
  *
@@ -45,17 +46,17 @@ public class CutCopyPasteAdapter extends MouseAdapter {
 
             JMenuItem cutItem = new JMenuItem(new DefaultEditorKit.CutAction());
             cutItem.setText(CUT);
-            cutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            cutItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, DolphinUtils.getMenuShortcutKeyMaskEx()));
             pop.add(cutItem);
 
             JMenuItem copyItem = new JMenuItem(new DefaultEditorKit.CopyAction());
             copyItem.setText(COPY);
-            copyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            copyItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx()));
             pop.add(copyItem);
 
             JMenuItem pasteItem = new JMenuItem(new DefaultEditorKit.PasteAction());
             pasteItem.setText(PASTE);
-            pasteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask()));
+            pasteItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, DolphinUtils.getMenuShortcutKeyMaskEx()));
             pop.add(pasteItem);
 
             boolean hasSelection = tc.getSelectionStart()!=tc.getSelectionEnd();

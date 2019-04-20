@@ -34,6 +34,7 @@ import open.dolphin.table.ListTableModel;
 import open.dolphin.table.ListTableSorter;
 import open.dolphin.table.StripeTableCellRenderer;
 import open.dolphin.util.AgeCalculater;
+import open.dolphin.util.DolphinUtils;
 import open.dolphin.util.StringTool;
 
 /**
@@ -508,7 +509,7 @@ public class PatientSearchImpl extends AbstractMainComponent implements Property
         //-----------------------------------------------
         // Copy 機能を実装する
         //-----------------------------------------------
-        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, Toolkit.getDefaultToolkit().getMenuShortcutKeyMask());
+        KeyStroke copy = KeyStroke.getKeyStroke(KeyEvent.VK_C, DolphinUtils.getMenuShortcutKeyMaskEx());
         String actionText = ClientContext.getMyBundle(PatientSearchImpl.class).getString("actionText.copy");
         copyAction = new AbstractAction(actionText) {
 

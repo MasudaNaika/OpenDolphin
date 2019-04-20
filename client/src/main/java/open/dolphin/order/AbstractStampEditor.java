@@ -424,8 +424,8 @@ public abstract class AbstractStampEditor {
      */
     protected void checkValidation() {
         if (boundSupport != null) {
-            boundSupport.firePropertyChange(EMPTY_DATA_PROP, new Boolean(!setIsEmpty), new Boolean(setIsEmpty));
-            boundSupport.firePropertyChange(VALIDA_DATA_PROP, new Boolean(!setIsValid), new Boolean(setIsValid));
+            boundSupport.firePropertyChange(EMPTY_DATA_PROP, (Boolean)(!setIsEmpty), (Boolean)(setIsEmpty));
+            boundSupport.firePropertyChange(VALIDA_DATA_PROP, (Boolean)(!setIsValid), (Boolean)(setIsValid));
         }
     }
     

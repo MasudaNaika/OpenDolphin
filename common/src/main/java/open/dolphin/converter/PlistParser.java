@@ -276,7 +276,7 @@ public final class PlistParser {
             sb.append(clsName.substring(1));
             String fullName = sb.toString();
 
-            ret = Class.forName(fullName).newInstance();
+            ret = Class.forName(fullName).getDeclaredConstructor().newInstance();
 
         } catch (Exception e) {
             debug(e.getMessage());

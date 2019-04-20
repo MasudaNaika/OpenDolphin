@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status = "warn" strict = "true">
+    <Properties>
+        <Property name = "logFolder">_pathToLogFolder</Property>
+    </Properties>
+    <Appenders>
+        <Console name = "Console" target = "SYSTEM_OUT">
+            <PatternLayout pattern = "%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <Appender type = "File" name = "bootAppender" fileName = "${logFolder}/boot.log">
+            <Layout type = "PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+        <Appender type = "File" name = "part11Appender" fileName = "${logFolder}/part11.log">
+            <Layout type = "PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+        <Appender type = "File" name = "delegaterAppender" fileName = "${logFolder}/delegater.log">
+            <Layout type = "PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+        <Appender type = "File" name = "pvtAppender" fileName = "${logFolder}/pvt.log">
+            <Layout type = "PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+        <Appender type = "File" name = "labTestAppender" fileName = "${logFolder}/labTest.log">
+            <Layout type = "PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+        <Appender type = "File" name = "claimAppender" fileName = "${logFolder}/claim.log">
+            <Layout type = "PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+        <Appender type = "File" name = "mmlAppender" fileName = "${logFolder}/mml.log">
+            <Layout type = "PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+        <Appender type = "File" name = "errorAppender" fileName = "${logFolder}/error.log">
+            <Layout type = "PatternLayout">
+                <Pattern>%d %p %C{1.} [%t] %m%n</Pattern>
+            </Layout>
+        </Appender>
+    </Appenders>
+    <Loggers>
+        <Root level = "error">
+            <AppenderRef ref="Console"/>
+        </Root>
+        <Logger name = "boot.logger" level = "warn">
+            <AppenderRef ref = "bootAppender"/>
+        </Logger>
+        <Logger name = "part11.logger" level = "info">
+            <AppenderRef ref = "part11Appender"/>
+        </Logger>
+        <Logger name = "delegater.logger" level = "info">
+            <AppenderRef ref = "delegaterAppender"/>
+        </Logger>
+        <Logger name = "pvt.logger" level = "info">
+            <AppenderRef ref = "pvtAppender"/>
+        </Logger>
+        <Logger name = "labTest.logger" level = "info">
+            <AppenderRef ref = "labTestAppender"/>
+        </Logger>
+        <Logger name = "claim.logger" level = "info">
+            <AppenderRef ref = "claimAppender"/>
+        </Logger>
+        <Logger name = "mml.logger" level = "info">
+            <AppenderRef ref = "mmlAppender"/>
+        </Logger>
+        <Logger name = "error.logger" level = "info">
+            <AppenderRef ref = "errorAppender"/>
+        </Logger>
+    </Loggers>
+</Configuration>

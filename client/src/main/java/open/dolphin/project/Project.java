@@ -4,8 +4,11 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Properties;
 import open.dolphin.infomodel.ID;
+import open.dolphin.infomodel.IInfoModel;
+import open.dolphin.infomodel.RoleModel;
 import open.dolphin.infomodel.UserModel;
 
 /**
@@ -241,6 +244,18 @@ public class Project  {
     public static boolean isReadOnly() {
         String licenseCode = stub.getUserModel().getLicenseModel().getLicense();
         return !licenseCode.equals(LICENSE_DOCTOR);
+    }
+    
+    public static boolean isAdmin() {
+        boolean admin = false;
+        Collection<RoleModel> roles = Project.getUserModel().getRoles();
+        for (RoleModel model : roles) {
+            if (IInfoModel.ADMIN_ROLE.equals(model.getRole())) {
+                admin = true;
+                break;
+            }
+        }
+        return admin;
     }
     
 //s.oh^ 2014/08/19 ID権限

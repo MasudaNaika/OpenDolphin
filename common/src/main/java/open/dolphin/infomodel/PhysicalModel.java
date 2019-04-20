@@ -114,8 +114,8 @@ public class PhysicalModel extends InfoModel implements Comparable {
     public String calcBmi() {
         if (height != null && weight != null) {
             try{
-                float fw = new Float(weight).floatValue();
-                float fh = new Float(height).floatValue();
+                float fw = Float.valueOf(weight);
+                float fh = Float.valueOf(height);
                 float bmif = (10000f*fw) / (fh*fh);
                 String bmiS = String.valueOf(bmif);
                 int index = bmiS.indexOf('.');

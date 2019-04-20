@@ -307,7 +307,7 @@ public class StampBoxPlugin extends AbstractMainTool {
         publishBtn.setToolTipText(toolTipText);
         publishBtn.addActionListener((ActionEvent e) -> {
             int modifiers = e.getModifiers();
-            if ((modifiers & MouseEvent.SHIFT_MASK) != 0) {
+            if ((modifiers & ActionEvent.SHIFT_MASK) != 0) {
                 // Shift Click で export
                 UserStampBoxExportImporter ei = new UserStampBoxExportImporter(StampBoxPlugin.this);
                 ei.exportUserStampBox();
@@ -322,7 +322,7 @@ public class StampBoxPlugin extends AbstractMainTool {
         importBtn.setToolTipText(toolTipText);
         importBtn.addActionListener((ActionEvent e) -> {
             int modifiers = e.getModifiers();
-            if ((modifiers & MouseEvent.SHIFT_MASK) != 0) {
+            if ((modifiers & ActionEvent.SHIFT_MASK) != 0) {
                 // Shift Click で import
                 UserStampBoxExportImporter ei = new UserStampBoxExportImporter(StampBoxPlugin.this);
                 ei.importUserStampBox();

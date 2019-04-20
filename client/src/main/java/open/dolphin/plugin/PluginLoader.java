@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -49,10 +50,11 @@ public final class PluginLoader<S> {
                     String clsName = iter.next();
                     
                     try {
-                        S p = plugin.cast(Class.forName(clsName, true, loader).newInstance());
+                        S p = plugin.cast(Class.forName(clsName, true, loader).getDeclaredConstructor().newInstance());
                         return p;
                         
-                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                    } catch (InstantiationException | IllegalAccessException | ClassNotFoundException 
+                        | NoSuchMethodException | SecurityException | IllegalArgumentException | InvocationTargetException ex) {
                         Logger.getLogger(PluginLoader.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     return null;

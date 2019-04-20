@@ -105,7 +105,7 @@ public class DefaultSettingEx {
 
         // カラム数
         int spiInt = context.columnCount();
-        view.getColumnSpinner().setValue(new Integer(spiInt));
+        view.getColumnSpinner().setValue(spiInt);
 
         // ソート属性
         boolean last = context.sortIsLastModified();
