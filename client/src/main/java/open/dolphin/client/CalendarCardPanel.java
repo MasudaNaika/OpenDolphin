@@ -104,12 +104,12 @@ public class CalendarCardPanel extends JPanel  {
         this.add(cmdPanel);
         this.add(cardPanel);
         
-        Dimension size = this.getPreferredSize();
-        int h = size.height;
-        int w = 290;    // 268
-        size = new Dimension(w, h);
-        this.setMinimumSize(size);
-        this.setMaximumSize(size);
+//        Dimension size = this.getPreferredSize();
+//        int h = size.height;
+//        int w = 290;    // 268
+//        size = new Dimension(w, h);
+//        this.setMinimumSize(size);
+//        this.setMaximumSize(size);
     }
     
     private void updateTitle(LiteCalendarPanel lc, JLabel label) {

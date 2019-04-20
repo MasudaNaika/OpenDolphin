@@ -83,7 +83,7 @@ public class MemoInspector {
      * GUI コンポーネントを初期化する。
      */
     private void initComponents() {
-        memoArea = new JTextArea(5, 10);
+        memoArea = new JTextArea();
         memoArea.putClientProperty("karteCompositor", this);
         memoArea.setLineWrap(true);
         memoArea.setMargin(new java.awt.Insets(3, 3, 2, 2));
@@ -106,12 +106,12 @@ public class MemoInspector {
         memoPanel.add(new JScrollPane(memoArea), BorderLayout.CENTER);
 //s.oh$
 
-        Dimension size = memoPanel.getPreferredSize();
-        int h = size.height;
-        int w = 268;
-        size = new Dimension(w, h);
-        memoPanel.setMinimumSize(size);
-        memoPanel.setMaximumSize(size);
+//        Dimension size = memoPanel.getPreferredSize();
+//        int h = size.height;
+//        int w = 268;
+//        size = new Dimension(w, h);
+//        memoPanel.setMinimumSize(size);
+//        memoPanel.setMaximumSize(size);
     }
 
     /**
