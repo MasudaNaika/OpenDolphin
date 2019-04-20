@@ -168,17 +168,6 @@
                 <directory>src/main/java/META-INF</directory>
                 <targetPath>META-INF</targetPath>
             </resource>
-            <resource>
-                <targetPath>META-INF</targetPath>
-                <directory>src</directory>
-                <includes>
-                    <include>jax-ws-catalog.xml</include>
-                    <include>wsdl/**</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-            </resource>
         </resources>
     </build>
     <version>2.7.0</version>
