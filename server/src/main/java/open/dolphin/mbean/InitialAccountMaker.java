@@ -42,10 +42,12 @@ public class InitialAccountMaker {
     private static final String ADMIN_PASS_MD5 = "21232f297a57a5a743894a0e4a801fc3";    // admin
     private static final String ADMIN_SIR_NAME = "オープン";
     private static final String ADMIN_GIVEN_NAME = "ドルフィン";
+    
+    private static final String INIT_OPTION = "initdatabase";
 
-//    private static final boolean DEVELOPMENT = true;
-//    private static final String UPDATE_MEMO     = "Initial user registered.";
-//    private static final String NO_UPDATE_MEMO  = "User account exists.";
+    private static final boolean DEVELOPMENT = false;
+    private static final String UPDATE_MEMO     = "Initial user registered.";
+    private static final String NO_UPDATE_MEMO  = "User account exists.";
     
     @PersistenceContext
     private EntityManager em;
@@ -63,32 +65,35 @@ public class InitialAccountMaker {
     public void init() {
 //minagawa^ WildFly        
 //        start();
-//minagawa$        
+//minagawa$       
+        if (Boolean.parseBoolean(System.getProperty(INIT_OPTION))) {
+            start();
+        }
 //s.oh^ 2014/07/08 クラウド0対応
         createIndexes();
 //s.oh$
     }
     
     private void start() {
-//        boolean updated = false;
-//        
-//        long userCount = (Long) em.createQuery("select count(*) from UserModel").getSingleResult();
-//        long facilityCount = (Long) em.createQuery("select count(*) from FacilityModel").getSingleResult();
-//        
-//        // ユーザーも施設情報もない場合のみ初期ユーザーと施設情報を登録する
-//        if (userCount == 0 && facilityCount == 0) {
-//            addFacilityAdmin();
-//            if (DEVELOPMENT) {
-//                addDemoPatient();
-//            }
-//            updated = true;
-//        }
-//        
-//        if (updated) {
-//            Logger.getLogger("open.dolphin").info(UPDATE_MEMO);
-//        } else {
-//            Logger.getLogger("open.dolphin").info(NO_UPDATE_MEMO);
-//        }
+        boolean updated = false;
+        
+        long userCount = (Long) em.createQuery("select count(*) from UserModel").getSingleResult();
+        long facilityCount = (Long) em.createQuery("select count(*) from FacilityModel").getSingleResult();
+        
+        // ユーザーも施設情報もない場合のみ初期ユーザーと施設情報を登録する
+        if (userCount == 0 && facilityCount == 0) {
+            addFacilityAdmin();
+            if (DEVELOPMENT) {
+                addDemoPatient();
+            }
+            updated = true;
+        }
+        
+        if (updated) {
+            Logger.getLogger("open.dolphin").info(UPDATE_MEMO);
+        } else {
+            Logger.getLogger("open.dolphin").info(NO_UPDATE_MEMO);
+        }
         
 //minagawa^ WildFly         
 //        Properties config = new Properties();
