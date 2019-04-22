@@ -561,7 +561,7 @@ public class Dolphin implements MainWindow {
             });
 
             // Dock Icon
-            ImageIcon icon = ClientContext.getImageIcon("OpenDolphin-m.png");
+            ImageIcon icon = ClientContext.getImageIcon("OpenDolphin_icon.png");
             fApplication.setDockIconImage(icon.getImage());
 
         } else {
@@ -584,7 +584,7 @@ public class Dolphin implements MainWindow {
             });
 
             // Dock Icon
-            ImageIcon icon = ClientContext.getImageIcon("OpenDolphin-m.png");
+            ImageIcon icon = ClientContext.getImageIcon("OpenDolphin_icon.png");
             Taskbar.getTaskbar().setIconImage(icon.getImage());
 
         }
