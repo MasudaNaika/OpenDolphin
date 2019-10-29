@@ -33,7 +33,7 @@ public final class ConnectionSettingBean extends AbstractSettingBean {
     
     public ConnectionSettingBean() {
         tagMap.put("schema", new String[]{"http", "https"});
-        tagMap.put("port", new String[]{"8080", "80", "443"});
+        tagMap.put("port", new String[]{"8080", "80", "443", "none"});
         tagMap.put(Project.CONTEXT_ROOT, new String[]{Project.CONTEXT_ROOT_PRO, Project.CONTEXT_ROOT_DOCKER});
     }
     
@@ -99,7 +99,10 @@ public final class ConnectionSettingBean extends AbstractSettingBean {
 
         // Constract URI
         StringBuilder sb = new StringBuilder();
-        sb.append(getSchema()).append("://").append(getServer()).append(":").append(getPort());
+        sb.append(getSchema()).append("://").append(getServer());
+        if (!"none".equals(getPort())) {
+            sb.append(":").append(getPort());
+        }
         String uri = sb.toString();
         java.util.logging.Logger.getLogger(this.getClass().getName()).log(Level.FINE, "serverURI={0}", uri);
         stub.setServerURI(uri);
