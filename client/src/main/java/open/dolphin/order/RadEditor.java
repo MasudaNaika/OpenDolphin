@@ -503,8 +503,10 @@ public final class RadEditor extends AbstractStampEditor {
                     if (code==null) {
                         return false;
                     }
-                    else if (isNameEditableComment(code)) {
-                        return false;
+//                    else if (isNameEditableComment(code)) {
+//                        return false;
+                    if (isNumberEditableComment(code)) {
+                        return true;
                     } else return !is82Comment(code);
                 }
                 return col == NUMBER_COLUMN;

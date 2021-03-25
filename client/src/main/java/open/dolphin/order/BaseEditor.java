@@ -480,9 +480,12 @@ public final class BaseEditor extends AbstractStampEditor {
                     if (code==null) {
                         return false;
                     }
-                    // 名称（診療内容を変更できるコメントは数量編集不可）
-                    else if (isNameEditableComment(code)) {
-                        return false;
+//                    // 名称（診療内容を変更できるコメントは数量編集不可）
+//                    else if (isNameEditableComment(code)) {
+//                        return false;
+//                    }
+                    if (isNumberEditableComment(code)) {
+                        return true;
                     }
                     else return !is82Comment(code);
                 }

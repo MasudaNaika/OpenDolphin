@@ -483,6 +483,9 @@ public final class InjectionEditor extends AbstractStampEditor {
                     if (code==null) {
                         return false;
                     }
+                    if (isNumberEditableComment(code)) {
+                        return true;
+                    }
                     else if (isNameEditableComment(code)) {
                         return false;
 

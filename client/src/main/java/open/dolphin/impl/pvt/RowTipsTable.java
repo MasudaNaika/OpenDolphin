@@ -9,7 +9,7 @@ import open.dolphin.client.ClientContext;
 import open.dolphin.infomodel.ModelUtils;
 import open.dolphin.infomodel.PatientVisitModel;
 import open.dolphin.table.ListTableSorter;
-import org.apache.commons.lang.time.DurationFormatUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 
 /**
  *

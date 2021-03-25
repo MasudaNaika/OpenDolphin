@@ -256,8 +256,8 @@ public final class ClaimResource extends ListResourceBundle {
             // 編集不可コメント
             {"COMMENT_82", new String[]{"82","0082","８２","００８２"}},
             // 編集可能コメント
-            {"NUMBER_EDITABLE_COMMENT", new String[]{"84","0084"}},
-            {"NAME_EDITABLE_COMMENT", new String[]{"81","0081","83","0083","85","0085","86","0086"}},
+            {"NUMBER_EDITABLE_COMMENT", new String[]{"1", "6", "7", "84", "85", "0084", "058", "059", "095", "096"}},
+            {"NAME_EDITABLE_COMMENT", new String[]{"81", "0081", "83", "0083", "85", "0085", "86", "0086"}},
             // 検索特殊記号文字
             {"ASTERISK_HALF", "*"},
             {"ASTERISK_FULL", "＊"},

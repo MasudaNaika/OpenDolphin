@@ -28,7 +28,7 @@ import open.dolphin.project.Project;
 import open.dolphin.table.*;
 import open.dolphin.util.AgeCalculator;
 import open.dolphin.util.DolphinUtils;
-import org.apache.commons.lang.time.DurationFormatUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 
 /**
  * 受付リスト。
